@@ -29,8 +29,8 @@ public class VoiceSpawner : Widget {
     protected override void Start()
     {
         base.Start();
-        //        m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
-        m_WorkspaceID = "Put_your_Watson_conversation_workspace_id_here";
+          m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
+        //m_WorkspaceID = "Put_your_Watson_conversation_workspace_id_here";
     }
 
     protected override string GetName()
