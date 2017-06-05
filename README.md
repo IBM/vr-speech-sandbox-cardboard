@@ -22,7 +22,7 @@ Want to take your Watson app to the next level? Looking to leverage Watson Brand
 ## Featured technologies
 
 * [Unity](https://unity3d.com/): A cross-platform game engine used to develop video games for PC, consoles, mobile devices and websites.
-* [Google Cardboard](https://vr.google.com/cardboard/): An inexpensive view that mounts an Android phone to view VR apps.
+* [Google Cardboard](https://vr.google.com/cardboard/): An inexpensive viewer that mounts an Android phone to view VR apps.
 
 # Steps
 
@@ -35,7 +35,7 @@ Want to take your Watson app to the next level? Looking to leverage Watson Brand
 * [IBM Bluemix Account](http://ibm.biz/Bdimr6)
 * [Unity](https://unity3d.com/get-unity/download)
 * [Google GVR Unity SDK](https://developers.google.com/vr/unity/get-started)
-* [Android Unity SDK](https://docs.unity3d.com/Manual/android-sdksetup.html)* 
+* [Android Unity SDK](https://docs.unity3d.com/Manual/android-sdksetup.html) 
 
 ## 2. Create Bluemix services
 
