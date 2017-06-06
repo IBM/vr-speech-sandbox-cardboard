@@ -29,7 +29,9 @@ public class VoiceSpawner : Widget {
     protected override void Start()
     {
         base.Start();
+        System.Threading.Thread.Sleep(10000);
           m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
+        Debug.Log("start workspace ID: " + m_WorkspaceID);
         //m_WorkspaceID = "Put_your_Watson_conversation_workspace_id_here";
     }
 
@@ -57,6 +59,7 @@ public class VoiceSpawner : Widget {
                     {
                         string text = alt.transcript;
                         Debug.Log("Result: " + text + " Confidence: " + alt.confidence);
+                        Debug.Log("Workspace: " + m_WorkspaceID);
                         m_Conversation.Message(OnMessage, m_WorkspaceID, text);
                     }
                 }
