@@ -29,8 +29,8 @@ public class VoiceSpawner : Widget {
     protected override void Start()
     {
         base.Start();
-          m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
-        //m_WorkspaceID = "Put_your_Watson_conversation_workspace_id_here";
+          //m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
+        m_WorkspaceID = "529fbc7e-b2dc-4d6d-be2d-13587a8b51d8";
     }
 
     protected override string GetName()
@@ -57,6 +57,7 @@ public class VoiceSpawner : Widget {
                     {
                         string text = alt.transcript;
                         Debug.Log("Result: " + text + " Confidence: " + alt.confidence);
+                        Debug.Log("workspace id: " + m_WorkspaceID);
                         m_Conversation.Message(OnMessage, m_WorkspaceID, text);
                     }
                 }
