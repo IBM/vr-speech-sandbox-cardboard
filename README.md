@@ -62,12 +62,20 @@ If you followed the previous steps you should already be inside your local clone
 5. Follow [these instructions](https://github.com/IBM/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
 6. Follow [these instructions](https://github.com/IBM/unity-sdk#configuring-your-service-credentials) to add your Speech To Text and Conversation service credentials (located on [IBM Bluemix](https://console.ng.bluemix.net/)).
 7. Select `Advanced Mode` in the configuration window.
-8. Click `Add Variable` and name your new variable `ConversationV1_ID` then set its value to the Workspace ID of your Conversation workspace.
-    ![Variable Configuration Example](doc/source/images/add_variable.png?raw=true)
+8. Open the script vr-speech-sandbox-cardboard/SpeechSandbox/Assests/Scripts/VoiceSpawner.cs and put your workspace ID on line #34 in the Start() method.
  You can find your workspace ID by selecting the expansion menu on your conversation workspace and selecting `View details`.
     ![View Details Location](doc/source/images/workspace_details.png?raw=true)
 9. In the Unity editor project tab, select Assets->Scenes->MainGame->MainMenu and double click to load the scene.
 10. Press Play
+11. To Build an android .apk file and deploy to your phone, you can File -> Build Settings (Cntrl + Shift +B) and click Build. When prompted you can name your build and then move it to your phone. 
+Alternately, connect the phone via USB and File-> Build and Run (or Control+B).
+    Make sure you have enabled USB Debugging:
+    A. Open Settings-> About-> Software Information-> More.
+    B. Then tap “Build number” seven times to enable Developer options. ...
+    C. Go back to Settings menu and now you'll be able to see “Developer options” there.
+    D. Tap it and turn on USB Debugging from the menu on the next screen.
+   Once the app is deployed to your phone it will start, but you'll need to set permissions for the app before it will work correctly:
+    A. Open Settings-> Apps-> SpeechSandboxCardboard-> Permissions and enable Microphone and Storage.
 
 # Links
 
