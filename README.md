@@ -2,7 +2,7 @@
 
 In this developer journey we will create a Virtual Reality game based on Watson's [Speech-to-Text](https://www.ibm.com/watson/developercloud/speech-to-text.html) and Watson's [Conversation](https://www.ibm.com/watson/developercloud/conversation.html) services.
 
-In Virtual Reality, where you truly â€œinhabitâ€ the space, speech can feel like a more natural interface than other methods. Providing speech controls allows developers to create more immersive experiences. Google Cardboard is by far the most popular VR headset platform, with 84 million sold in 2016 (http://www.hypergridbusiness.com/2016/11/report-98-of-vr-headsets-sold-this-year-are-for-mobile-phones) in 2016.
+In Virtual Reality, where you truly "inhabit" the space, speech can feel like a more natural interface than other methods. Providing speech controls allows developers to create more immersive experiences. Google Cardboard is by far the most popular VR headset platform, with 84 million sold in 2016 (http://www.hypergridbusiness.com/2016/11/report-98-of-vr-headsets-sold-this-year-are-for-mobile-phones) in 2016.
 
 When the reader has completed this journey, they will understand how to:
 
@@ -67,15 +67,23 @@ If you followed the previous steps you should already be inside your local clone
     ![View Details Location](doc/source/images/workspace_details.png?raw=true)
 9. In the Unity editor project tab, select Assets->Scenes->MainGame->MainMenu and double click to load the scene.
 10. Press Play
-11. To Build an android .apk file and deploy to your phone, you can File -> Build Settings (Cntrl + Shift +B) and click Build. When prompted you can name your build and then move it to your phone. 
-Alternately, connect the phone via USB and File-> Build and Run (or Control+B).
-    Make sure you have enabled USB Debugging:
-    A. Open Settings-> About-> Software Information-> More.
-    B. Then tap “Build number” seven times to enable Developer options. ...
-    C. Go back to Settings menu and now you'll be able to see “Developer options” there.
-    D. Tap it and turn on USB Debugging from the menu on the next screen.
+11. To Build an android .apk file and deploy to your phone, you can File -> Build Settings (Ctrl + Shift +B) and click Build. 
+12. When prompted you can name your build and then move it to your phone.
+13. Alternately, connect the phone via USB and File-> Build and Run (or Ctrl+B).
+
+   *Make sure you have enabled USB Debugging:*
+     
+* Open Settings-> About-> Software Information-> More
+
+* Then tap â€œBuild numberâ€ seven times to enable Developer options.
+
+* Go back to Settings menu and now you'll be able to see â€œDeveloper optionsâ€ there.
+
+* Tap it and turn on USB Debugging from the menu on the next screen.
+
    Once the app is deployed to your phone it will start, but you'll need to set permissions for the app before it will work correctly:
-    A. Open Settings-> Apps-> SpeechSandboxCardboard-> Permissions and enable Microphone and Storage.
+
+  * Open Settings-> Apps-> SpeechSandboxCardboard-> Permissions and enable Microphone and Storage.
 
 # Links
 
