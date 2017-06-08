@@ -29,8 +29,9 @@ public class VoiceSpawner : Widget {
     protected override void Start()
     {
         base.Start();
-          //m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
-        m_WorkspaceID = "529fbc7e-b2dc-4d6d-be2d-13587a8b51d8";
+        //Below will work in Unity editor emulator, but not on the phone app:
+        //m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
+        m_WorkspaceID = "Put Your Workspace ID here";
     }
 
     protected override string GetName()
@@ -57,7 +58,6 @@ public class VoiceSpawner : Widget {
                     {
                         string text = alt.transcript;
                         Debug.Log("Result: " + text + " Confidence: " + alt.confidence);
-                        Debug.Log("workspace id: " + m_WorkspaceID);
                         m_Conversation.Message(OnMessage, m_WorkspaceID, text);
                     }
                 }
