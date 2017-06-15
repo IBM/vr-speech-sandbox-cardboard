@@ -10,6 +10,10 @@ When the reader has completed this journey, they will understand how to:
 
 ![](doc/source/images/architecture.png)
 
+# Watch the Video
+
+[![](http://img.youtube.com/vi/rZFpUpy4y0g/0.jpg)](https://www.youtube.com/watch?v=rZFpUpy4y0g)
+
 ### With Watson
 
 Want to take your Watson app to the next level? Looking to leverage Watson Brand assets? Join the [With Watson](https://www.ibm.com/watson/with-watson) program which provides exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
@@ -87,6 +91,7 @@ If you followed the previous steps you should already be inside your local clone
 
 # Links
 
+* [Demon on YouTube](https://www.youtube.com/watch?v=rZFpUpy4y0g)
 * [Watson Unity SDK](https://github.com/IBM/unity-sdk)
 
 # License
