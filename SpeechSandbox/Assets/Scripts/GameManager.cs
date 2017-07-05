@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour {
         {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
+            if (curDistance < distance && curDistance < 1.0)
             {
                 closest = go;
                 distance = curDistance;
