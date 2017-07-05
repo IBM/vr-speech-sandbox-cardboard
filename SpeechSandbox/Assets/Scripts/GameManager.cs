@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	public GvrAudioRoom musicSource;
 	public GvrAudioSource voiceSource;
 	public GvrAudioSource errorSource;
+        public AudioClip welcomeSource;
 
 	[Header("Objects", order = 2)]
 	public GameObject mainCamera;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour {
     protected virtual void Awake()
 	{
         InitializeObjects();
+        PlayClip(welcomeSource);
     }
 		
 	protected virtual void Start () {
