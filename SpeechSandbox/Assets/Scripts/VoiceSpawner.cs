@@ -31,7 +31,7 @@ public class VoiceSpawner : Widget {
         base.Start();
         //Below will work in Unity editor emulator, but not on the phone app:
         //m_WorkspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
-        m_WorkspaceID = "Put Your Workspace ID here";
+        m_WorkspaceID = "Put Your Workspace.ID here";
     }
 
     protected override string GetName()
@@ -73,6 +73,16 @@ public class VoiceSpawner : Widget {
             Debug.Log("Intent: " + intent);
             string currentMat = null;
             string currentScale = null;
+            string direction = null;
+            if (intent == "move")
+            {
+                foreach (EntityResponse entity in resp.entities)
+                {
+                    Debug.Log("entityType: " + entity.entity + " , value: " + entity.value);
+                    direction = entity.value;
+                    gameManager.MoveObject(direction);
+                }
+            }
             if (intent == "create")
             {
                 bool createdObject = false;

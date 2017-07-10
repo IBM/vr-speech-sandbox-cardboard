@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
 	
     [Header("Pointer", order = 1)]
     public GvrReticlePointer pointer;
+
     
 	protected GameObject pointerTarget;
     private GameObject currentObject;
@@ -112,6 +113,40 @@ public class GameManager : MonoBehaviour {
 			Destroy (pointerTarget);
 		}
 	}
+
+    public void MoveObject(string direction)
+    {
+        GameObject pointerTarget = null;
+        pointerTarget = FindClosestObject();
+        Vector3 origin = new Vector3(0, 0, 0);
+
+        if (pointerTarget){
+            Vector3 currentLocation = pointerTarget.transform.position;
+            if (direction == "up")
+            {
+                pointerTarget.transform.position = new Vector3(currentLocation.x, currentLocation.y + 5, currentLocation.z);
+            }
+            else if (direction == "right")
+            {
+                pointerTarget.transform.RotateAround(origin, Vector3.up, 20);
+            }
+            else if (direction == "left")
+            {
+                pointerTarget.transform.RotateAround(origin, Vector3.up, -20);
+
+            }
+            else if (direction == "closer")
+            {
+                transform.position = Vector3.MoveTowards(currentLocation, origin, 2);
+            }
+            else if (direction == "farther")
+            {
+                transform.position = Vector3.MoveTowards(currentLocation, origin, -2);
+            }
+            
+
+        }
+    }
 
 	public virtual void CreateObject(string key, string matKey, string scale)
 	{
