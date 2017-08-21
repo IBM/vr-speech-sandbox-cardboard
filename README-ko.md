@@ -3,7 +3,7 @@
 이번 개발 과정에서는 Watson  [Speech-to-Text](https://www.ibm.com/watson/developercloud/speech-to-text.html) 와 Watson  [Conversation](https://www.ibm.com/watson/developercloud/conversation.html) 서비스를 기반으로 VR(Virtual Reality, 가상 현실) 게임을 만들어보겠습니다.
 
 우리가 실제 공간에 “있는” 것처럼 느껴지는 가상 현실 속에서 ‘말하기’는 다른 어떤 상호작용 방법보다 훨씬 자연스럽게 의사를 주고받을 수 있는 소통 수단입니다. 말하기 기능을 제공함으로써 개발자는 한층 몰입감 넘치는 경험을 만들어낼 수 있습니다. Google Cardboard는월등한 차이로 가장 인기있는 머리에 쓰는 VR 플랫폼으로,
-2016년 약 84만 대가 판매되었습니다 (http://www.hypergridbusiness.com/2016/11/report-98-of-vr-headsets-sold-this-year-are-for-mobile-phones)
+[2016년 약 84만 대가 판매되었습니다](http://www.hypergridbusiness.com/2016/11/report-98-of-vr-headsets-sold-this-year-are-for-mobile-phones)
 
 이 과정을 마치면 다음 방법을 이해할 수 있습니다.
 
@@ -19,7 +19,7 @@
 
 Watson 앱을 한 레벨 위로 끌어올리고 싶으신가요? 아니면 Watson 브랜드 기술을 활용하고 싶으신가요? 특별한 브랜딩, 마케팅 및 기술 자료를 제공하여 Watson 기반 상용 솔루션을 한층 업그레이드하고 개발 속도를 앞당겨주는 [With Watson](https://www.ibm.com/watson/with-watson) 프로그램에 가입하세요.
 
-## 포함된 구성요소
+## 구성요소
 
 * [IBM Watson Conversation](https://www.ibm.com/watson/developercloud/conversation.html): 음성이나 텍스트 기반의 대화형 프로그램 환경인 챗봇을 만들 수 있습니다.
 * [IBM Watson Speech-to-Text](https://www.ibm.com/watson/developercloud/speech-to-text.html): 음성을 텍스트로 변환해 주는 서비스입니다.
@@ -31,9 +31,9 @@ Watson 앱을 한 레벨 위로 끌어올리고 싶으신가요? 아니면 Watso
 
 # 단계
 
-1. [시작 전 주의사항](#1-before-you-begin)
-2. [Bluemix 서비스 작성](#2-create-bluemix-services)
-3. [빌드 및 실행](#3-building-and-running)
+1. [시작 전 주의사항](#1-시작-전-주의사항)
+2. [Bluemix 서비스 작성](#2-bluemix-서비스-작성)
+3. [빌드 및 실행](#3-빌드-및-실행)
 
 ## 1. 시작 전 주의사항
 
@@ -52,24 +52,23 @@ Watson 앱을 한 레벨 위로 끌어올리고 싶으신가요? 아니면 Watso
 
 1. [Speech-To-Text](https://console.ng.bluemix.net/catalog/speech-to-text/) 서비스 인스턴스를 생성합니다.
 2. [Conversation](https://console.ng.bluemix.net/catalog/services/conversation/) 서비스 인스턴스를 생성합니다.
-3. 대시보드에 서비스가 표시되면 생성된 Conversation 서비스를 선택하고  !["Launch Tool"](/doc/source/images/workspace_launch.png?raw=true) 버튼을 크릭합니다.
-4. Conversation Tool에 로그인한 후  !["Import"](/doc/source/images/import_icon.png?raw=true) 단추를 클릭합니다.
-5. 이 저장소 복제본에 있는 Conversation [`workspace.json`](data/workspace.json) 파일을 가져옵니다.
+3. 대시보드에 서비스가 표시되면 생성된 Conversation 서비스를 선택하고  !["Launch Tool"](/doc/source/images/workspace_launch.png?raw=true) 버튼을 클릭합니다.
+4. Conversation Tool에 로그인한 후  !["Import"](/doc/source/images/import_icon.png?raw=true) 버튼을 클릭합니다.
+5. 이 저장소 복제본에 있는 Conversation [`workspace.json`](data/workspace.json)파일을 가져옵니다.
 
 ## 3. 빌드 및 실행
 
-이전 단계를 수행했으면 로컬 복제본 안으로 이미 이동하여 Unity에서 앱 실행을 시작할 수 있는 준비된 상태여야 합니다.
+이전 단계를 수행했다면, 로컬 복제본으로 이미 이동하여 Unity에서 앱 실행을 시작할 수 있도록 준비된 상태여야 합니다.
 
 1. `git clone https://github.com/IBM/unity-sdk`
 2. Unity를 열고 프로젝트 대시보드에서  ![Open](doc/source/images/unity_open.png?raw=true) 버튼을 선택합니다.
 3. 이 저장소를 복제한 곳으로 이동해서 "Creation Sandbox" 디렉토리를 엽니다.
 4. 프로젝트를 최신 Unity 버전으로 업그레이드하라는 메시지가 나타나면 업그레이드합니다.
 5. [이 지침](https://github.com/IBM/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) 에 따라 단계 1에서 다운로드한 Watson Unity SDK를 프로젝트에 추가합니다.
-6. [이 지침](https://github.com/IBM/unity-sdk#configuring-your-service-credentials) 에 따라 Speech To Text 및 Conversation 서비스 신임 정보 ([IBM Bluemix](https://console.ng.bluemix.net/) 에 있음)를 추가합니다.
-7. 설정(configuration) 창에서 `Advanced Mode` 를 선택합니다.
-8. vr-speech-sandbox-cardboard/SpeechSandbox/Assests/Scripts/VoiceSpawner.cs 스크립트를 열고 Start() method의  #34 번 라인에 여러분의 워크스페이스 ID를
- 입력합니다. 워크스페이스 ID는 Conversation 워크스페이스에서 확장 메뉴(expansion menu)를 선택하고  `View details`.
-    ![View Details Location](doc/source/images/workspace_details.png?raw=true) 를 선택하면 확인할 수 있습니다.
+6. [이 지침](https://github.com/IBM/unity-sdk#configuring-your-service-credentials)에 따라 Speech To Text 및 Conversation 서비스 신임 정보([IBM Bluemix](https://console.ng.bluemix.net/)에 있는)를 추가합니다.
+7. 설정(configuration) 창에서 `Advanced Mode`를 선택합니다.
+8. vr-speech-sandbox-cardboard/SpeechSandbox/Assests/Scripts/VoiceSpawner.cs 스크립트를 열고 Start() method의  #34 번 라인에 여러분의 workspace ID를 입력합니다. Workspace ID는 Conversation 워크스페이스에서 확장 메뉴(expansion menu)를 선택하고  `View details`를 선택하면 확인할 수 있습니다.
+    ![View Details Location](doc/source/images/workspace_details.png?raw=true)
 9. Unity 편집기 프로젝트 탭에서  Assets->Scenes->MainGame->MainMenu 를 선택하고 더블클릭하여 장면을 로딩합니다.
 10. Play를 누릅니다.
 11. 안드로이드용 .apk 파일을 빌드해서 여러분의 휴대전화에 실행하시려면,  File -> Build Settings (Ctrl + Shift +B) 으로 들어가서 Build를 클릭합니다
