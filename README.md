@@ -65,21 +65,22 @@ If you followed the previous steps you should already be inside your local clone
 2. Open Unity and inside the project launcher select the ![Open](doc/source/images/unity_open.png?raw=true) button.
 3. Navigate to where you cloned this repository and open the "SpeechSandbox" directory.
 4. If prompted to upgrade the project to a newer Unity version, do so.
-5. Follow [these instructions](https://github.com/IBM/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
-6. Follow [these instructions](https://github.com/IBM/unity-sdk#configuring-your-service-credentials) to add your Speech To Text and Conversation service credentials (located on [IBM Bluemix](https://console.ng.bluemix.net/)).
-7. Select `Advanced Mode` in the configuration window.
-8. Open the script vr-speech-sandbox-cardboard/SpeechSandbox/Assests/Scripts/VoiceSpawner.cs and put your workspace ID on line #34 in the Start() method.
+5. You will need to change the Build Settings to Android in order to bring up the configuration tab for the Watson unity-sdk. Go to _File_ -> _Build_ Settings (Ctrl + Shift +B) and change the Platform to `Android`, then click `Switch Platform`.
+6. Follow [these instructions](https://github.com/IBM/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
+7. Follow [these instructions](https://github.com/IBM/unity-sdk#configuring-your-service-credentials) to add your Speech To Text and Conversation service credentials (located on [IBM Bluemix](https://console.ng.bluemix.net/)).
+8. Select `Advanced Mode` in the configuration window.
+9. Open the script vr-speech-sandbox-cardboard/SpeechSandbox/Assests/Scripts/VoiceSpawner.cs and put your workspace ID on line #34 in the Start() method.
  You can find your workspace ID by selecting the expansion menu on your conversation workspace and selecting `View details`.
     ![View Details Location](doc/source/images/workspace_details.png?raw=true)
-9. In the Unity editor project tab, select Assets->Scenes->MainGame->MainMenu and double click to load the scene.
-10. Press Play
-11. To Build an android .apk file and deploy to your phone, you can File -> Build Settings (Ctrl + Shift +B) and click Build. 
-12. When prompted you can name your build and then move it to your phone.
-13. Alternately, connect the phone via USB and File-> Build and Run (or Ctrl+B).
+10. In the Unity editor project tab, select _Assets_->_Scenes_->_Playground_ and double click to load the scene.
+11. Press Play
+12. To Build an android .apk file and deploy to your phone, you can _File_ -> _Build_ Settings (Ctrl + Shift +B) and click Build. 
+13. When prompted you can name your build and then move it to your phone.
+14. Alternately, connect the phone via USB and _File_-> _Build and Run_ (or Ctrl+B).
 
    *Make sure you have enabled USB Debugging:*
      
-* Open Settings-> About-> Software Information-> More
+* Open _Settings_-> _About_-> _Software Information_-> _More_
 
 * Then tap “Build number” seven times to enable Developer options.
 
@@ -89,7 +90,7 @@ If you followed the previous steps you should already be inside your local clone
 
    Once the app is deployed to your phone it will start, but you'll need to set permissions for the app before it will work correctly:
 
-  * Open Settings-> Apps-> SpeechSandboxCardboard-> Permissions and enable Microphone and Storage.
+  * Open _Settings_-> _Apps_-> _SpeechSandboxCardboard_-> _Permissions_ and enable Microphone and Storage.
 
 # Links
 
