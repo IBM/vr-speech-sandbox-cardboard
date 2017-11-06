@@ -5,6 +5,7 @@
 /[Bb]uilds/
 /Assets/AssetStoreTools*
 /Assets/Watson*
+/Assets/unity-sdk*
 
 # Ignore Watson Config file.
 /Assets/StreamingAssets*
