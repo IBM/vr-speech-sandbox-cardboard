@@ -103,7 +103,7 @@ public class VoiceSpawner : Widget {
                         createdObject = true;
                         currentMat = null;
                         currentScale = null;
-                    } 
+                    }
                 }
 
                 if (!createdObject)

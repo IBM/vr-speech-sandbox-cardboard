@@ -3,7 +3,7 @@
 --- !u!29 &1
 SceneSettings:
   m_ObjectHideFlags: 0
-  m_PVSData: 
+  m_PVSData:
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
@@ -137,11 +137,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2044164019, guid: 3b7eeb268f8424f809fc34c33b2a6820, type: 2}
       propertyPath: KeyboardText
-      value: 
+      value:
       objectReference: {fileID: 34730832}
     - target: {fileID: 2044164019, guid: 3b7eeb268f8424f809fc34c33b2a6820, type: 2}
       propertyPath: KeyboardInputField
-      value: 
+      value:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b7eeb268f8424f809fc34c33b2a6820, type: 2}
@@ -485,7 +485,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1260534185, guid: 6c99596fcbe574b168ae0faa3afe8546, type: 2}
       propertyPath: keyboardDelegate
-      value: 
+      value:
       objectReference: {fileID: 1762758481}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6c99596fcbe574b168ae0faa3afe8546, type: 2}
@@ -620,11 +620,11 @@ Prefab:
     - target: {fileID: 114000011779369860, guid: f4cf01cab04054926935acc7cb25b7f5,
         type: 2}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      value:
       objectReference: {fileID: 407592335}
     - target: {fileID: 890278573, guid: f4cf01cab04054926935acc7cb25b7f5, type: 2}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      value:
       objectReference: {fileID: 407592335}
     - target: {fileID: 890278573, guid: f4cf01cab04054926935acc7cb25b7f5, type: 2}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -754,8 +754,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb5dd43baba2d4dc1bab789615567e3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   raycastMode: 0
   raycasterEventMask:
     serializedVersion: 2
@@ -770,8 +770,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1156c073149742478887bb24456f32d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   globalGainDb: 0
   occlusionMask:
     serializedVersion: 2
@@ -978,11 +978,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11499020, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 2}
       propertyPath: controllerPointer
-      value: 
+      value:
       objectReference: {fileID: 328517437}
     - target: {fileID: 11499020, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 2}
       propertyPath: controllerMain
-      value: 
+      value:
       objectReference: {fileID: 251127252}
     - target: {fileID: 11499020, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 2}
       propertyPath: gvrEmulatedPlatformType

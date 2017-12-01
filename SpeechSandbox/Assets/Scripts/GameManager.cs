@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	public List<string> _oKeys = new List<string>();
 	public List<GameObject> _oValues = new List<GameObject>();
 	protected Dictionary<string, GameObject> objects;
-	
+
 	[Header("AudioSources", order = 1)]
 	public GvrAudioRoom musicSource;
 	public GvrAudioSource voiceSource;
@@ -22,11 +22,11 @@ public class GameManager : MonoBehaviour {
 
 	[Header("Objects", order = 2)]
 	public GameObject mainCamera;
-	
+
     [Header("Pointer", order = 1)]
     public GvrReticlePointer pointer;
 
-    
+
 	protected GameObject pointerTarget;
     private GameObject currentObject;
     private  GameObject[] gameObjects;
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
         InitializeObjects();
         PlayClip(welcomeSource);
     }
-		
+
 	protected virtual void Start () {
 
 	}
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour {
 		{
 			objects.Add(_oKeys[i], _oValues[i]);
 		}
-			
+
 		_oValues.Clear();
 	}
 
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour {
         }
         return closest;
     }
-    public void DestroyAtPointer() 
+    public void DestroyAtPointer()
 	{
         pointerTarget = null;
         pointerTarget = FindClosestObject();
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour {
             {
                 transform.position = Vector3.MoveTowards(currentLocation, origin, -2);
             }
-            
+
 
         }
     }
@@ -154,18 +154,18 @@ public class GameManager : MonoBehaviour {
 
         // Check Pointer
         Vector3? tempDestination = pointer.reticlePointerImpl.GetLineEndPoint();
-        
+
      	if (newObject != null && tempDestination != null)
 		{
 			Vector3 destination = (Vector3)tempDestination;
 			Vector3 location = new Vector3(destination.x, destination.y + newObject.transform.position.y, destination.z);
-       
+
 			if (matKey != null && newObject.GetComponent<CreatableObject>().isCustomizable)
 			{
 				newObject.GetComponent<CreatableObject>().ApplyMaterial(matKey);
 				newObject.GetComponent<CreatableObject>().matKey = matKey;
 			}
-            
+
 			GameObject objectInstance = (GameObject) Instantiate(newObject, location, newObject.transform.rotation);
 
 			if (scale != null)

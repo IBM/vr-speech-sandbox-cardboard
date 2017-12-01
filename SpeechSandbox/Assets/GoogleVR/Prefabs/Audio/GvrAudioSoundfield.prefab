@@ -37,8 +37,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d38f0664abc0c446a8fa0886ec2bcd12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   gainDb: 0
   playOnAwake: 1
   soundfieldClip0102: {fileID: 0}

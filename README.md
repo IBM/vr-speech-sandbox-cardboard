@@ -44,7 +44,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 * [IBM Cloud Account](http://ibm.biz/Bdimr6)
 * [Unity](https://unity3d.com/get-unity/download)
 * [Google GVR Unity SDK](https://developers.google.com/vr/unity/get-started)
-* [Android Unity SDK](https://docs.unity3d.com/Manual/android-sdksetup.html) 
+* [Android Unity SDK](https://docs.unity3d.com/Manual/android-sdksetup.html)
 
 ## 2. Create IBM Cloud services
 
@@ -77,12 +77,12 @@ If you followed the previous steps you should already be inside your local clone
     ![View Details Location](doc/source/images/workspace_details.png?raw=true)
 10. In the Unity editor project tab, select _Assets_->_Scenes_->_Playground_ and double click to load the scene.
 11. Press Play
-12. To Build an android .apk file and deploy to your phone, you can _File_ -> _Build_ Settings (Ctrl + Shift +B) and click Build. 
+12. To Build an android .apk file and deploy to your phone, you can _File_ -> _Build_ Settings (Ctrl + Shift +B) and click Build.
 13. When prompted you can name your build and then move it to your phone.
 14. Alternately, connect the phone via USB and _File_-> _Build and Run_ (or Ctrl+B).
 
    *Make sure you have enabled USB Debugging:*
-     
+
 * Open _Settings_-> _About_-> _Software Information_-> _More_
 
 * Then tap “Build number” seven times to enable Developer options.

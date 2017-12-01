@@ -43,13 +43,13 @@ public class CreatableObject : MonoBehaviour {
 	//------------------------------------------------------------------------------------------------------------------
 
 	// Use this for initialization
-	protected virtual void Start () 
+	protected virtual void Start ()
 	{
 		initialScale = transform.localScale;
 	}
-	
+
 	// Update is called once per frame
-	protected virtual void Update () 
+	protected virtual void Update ()
 	{
 		if (transform.position.y < -50)
 		{
@@ -73,7 +73,7 @@ public class CreatableObject : MonoBehaviour {
 	// Modifying Object
 	//------------------------------------------------------------------------------------------------------------------
 	public virtual void ApplyMaterial(string matKey)
-	{ 
+	{
 		if (mats == null)
 		{
 			InitializeMaterials();

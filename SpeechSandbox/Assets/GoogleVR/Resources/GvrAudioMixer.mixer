@@ -43,7 +43,7 @@ AudioMixerEffectController:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: 1d75231a3eb9547d6bd90860dd5851a0
   m_EffectName: Attenuation
   m_MixLevel: 087cc13ea75d3499fa1dd7404f66b0af
@@ -56,7 +56,7 @@ AudioMixerEffectController:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_EffectID: e3e5096179e9641ec8b7b1e0d1d89905
   m_EffectName: GVR Audio Renderer
   m_MixLevel: 5939f9f8f13db463aad991ae3514491d
