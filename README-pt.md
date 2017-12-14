@@ -1,5 +1,6 @@
 ﻿# Crie comandos de voz para experiências de RV com os serviços do Watson 
 *Ler em outros idiomas: [한국어](README-ko.md).* 
+
 Nesta jornada do desenvolvedor, criaremos um game de Realidade Virtual com base nos serviços [Speech-to-Text](https://www.ibm.com/watson/developercloud/speech-to-text.html) do Watson e [Conversation](https://www.ibm.com/watson/developercloud/conversation.html) do Watson. 
 
 Na Realidade Virtual, na qual você “habita” o espaço de verdade, a fala pode parecer uma interface mais natural do que outros métodos. A disponibilização de controles por fala permite que os desenvolvedores criem experiências mais imersivas. O Google Cardboard é, sem dúvida, a plataforma mais popular de RV para colocar na cabeça, com 84 milhões de unidades vendidas em 2016 (http://www.hypergridbusiness.com/2016/11/report-98-of-vr-headsets-sold-this-year-are-for-mobile-phones). 
