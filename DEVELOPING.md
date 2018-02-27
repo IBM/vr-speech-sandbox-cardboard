@@ -10,9 +10,9 @@ Here is a general overview of some of the more important directories in the proj
 │   ├── Assets                  // contains all project assets
 │   │   ├── _Scenes                 // all game scenes
 │   │   │   ├── Playground           // Main game scene
-│   │   │   │   
-│   │   │   │  
-│   │   │   │ 
+│   │   │   │
+│   │   │   │
+│   │   │   │
 │   │   ├── Prefabs                 // the games prefabs
 │   │   │   ├── CreatableObjects        // all objects that can be created
 │   │   │   └
