@@ -49,8 +49,8 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private string convo_username = "";
     private string convo_password = "";
     // Change convo_url if different from below
-    private string convo_url = "https://gateway.watsonplatform.net/conversation/api";
-    // Change  _conversationVersionDate if different from below
+    // Use this for TLS1.0 required by Unity as of 4/25/18
+    private string convo_url = "https://gateway-tls10.watsonplatform.net/conversation/api";
     private string _conversationVersionDate = "2017-05-26";
     private string convo_workspaceId = "";
 
