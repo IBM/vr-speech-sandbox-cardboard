@@ -45,7 +45,6 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 * [IBM Cloud Account](http://ibm.biz/Bdimr6)
 * [Unity](https://unity3d.com/get-unity/download)
-* [Google GVR Unity SDK](https://developers.google.com/vr/unity/get-started)
 * [Android Unity SDK](https://docs.unity3d.com/Manual/android-sdksetup.html)
 
 ## 2. Create IBM Cloud services
@@ -116,7 +115,7 @@ If you followed the previous steps you should already be inside your local clone
 
 # Links
 
-* [Demon on YouTube](https://www.youtube.com/watch?v=rZFpUpy4y0g)
+* [Demo on YouTube](https://www.youtube.com/watch?v=rZFpUpy4y0g)
 * [Watson Unity SDK](https://github.com/IBM/unity-sdk)
 
 # Learn more

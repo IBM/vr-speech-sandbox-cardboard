@@ -41,18 +41,18 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private SpeechToText _speechToText;
     private Conversation _conversation;
 
-    private string stt_username = "";
-    private string stt_password = "";
+    private string stt_username = "ac8c6da8-7df5-4f84-bbb9-9fdcc80e449b";
+    private string stt_password = "AMhIoMiXwAN6";
     // Change stt_url if different from below
     private string stt_url = "https://stream.watsonplatform.net/speech-to-text/api";
 
-    private string convo_username = "";
-    private string convo_password = "";
+    private string convo_username = "a4e9cecb-6745-49b8-8f44-e8f504eb5c88";
+    private string convo_password = "1bvh565niArd";
     // Change convo_url if different from below
-    // Use this for TLS1.0 required by Unity as of 4/25/18
-    private string convo_url = "https://gateway-tls10.watsonplatform.net/conversation/api";
+    private string convo_url = "https://gateway.watsonplatform.net/conversation/api";
+    // Change  _conversationVersionDate if different from below
     private string _conversationVersionDate = "2017-05-26";
-    private string convo_workspaceId = "";
+    private string convo_workspaceId = "1ffe32c4-1343-44d6-888c-7bb927c77735";
 
     public Text ResultsField;
 
