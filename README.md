@@ -23,8 +23,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 # Watch the Video
 
-[![](http://img.youtube.com/vi/rZFpUpy4y0g/0.jpg)](https://www.youtube.com/watch?v=rZFpUpy4y0g)
-
+[![](https://i.ytimg.com/vi/OsbV1xqX0hQ/0.jpg)](https://youtu.be/OsbV1xqX0hQ)
 ## Included components
 
 * [IBM Watson Assistant](https://www.ibm.com/watson/developercloud/conversation.html): Create a chatbot with a program that conducts a conversation via auditory or textual methods.
@@ -115,7 +114,7 @@ If you followed the previous steps you should already be inside your local clone
 
 # Links
 
-* [Demo on YouTube](https://www.youtube.com/watch?v=rZFpUpy4y0g)
+* [Demo on YouTube](https://youtu.be/OsbV1xqX0hQ)
 * [Watson Unity SDK](https://github.com/IBM/unity-sdk)
 
 # Learn more
