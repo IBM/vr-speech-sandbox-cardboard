@@ -45,7 +45,6 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 * [IBM Cloud Account](http://ibm.biz/Bdimr6)
 * [Unity](https://unity3d.com/get-unity/download)
-* [Google GVR Unity SDK](https://developers.google.com/vr/unity/get-started)
 * [Android Unity SDK](https://docs.unity3d.com/Manual/android-sdksetup.html)
 
 ## 2. Create IBM Cloud services
@@ -57,7 +56,7 @@ On your local machine:
 In [IBM Cloud](https://console.ng.bluemix.net/):
 
 1. Create a [Speech-To-Text](https://console.ng.bluemix.net/catalog/speech-to-text/) service instance.
-2. Create a [Assistant](https://console.ng.bluemix.net/catalog/services/conversation/) service instance.
+2. Create an [Assistant](https://console.ng.bluemix.net/catalog/services/conversation/) service instance.
 3. Once you see the services in the Dashboard, select the Assistant service you created and click the !["Launch Tool"](/doc/source/images/workspace_launch.png?raw=true) button.
 4. After logging into the Assistant Tool, click the !["Import"](/doc/source/images/import_icon.png?raw=true) button.
 5. Import the Assistant [`workspace.json`](data/workspace.json) file located in your clone of this repository.
@@ -116,7 +115,7 @@ If you followed the previous steps you should already be inside your local clone
 
 # Links
 
-* [Demon on YouTube](https://www.youtube.com/watch?v=rZFpUpy4y0g)
+* [Demo on YouTube](https://www.youtube.com/watch?v=rZFpUpy4y0g)
 * [Watson Unity SDK](https://github.com/IBM/unity-sdk)
 
 # Learn more
