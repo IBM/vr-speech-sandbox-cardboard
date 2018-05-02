@@ -24,6 +24,7 @@ using IBM.Watson.DeveloperCloud.DataTypes;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
+using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v2;
 using FullSerializer;
 using IBM.Watson.DeveloperCloud.Connection;
 
@@ -40,6 +41,8 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private fsSerializer _serializer = new fsSerializer();
     private SpeechToText _speechToText;
     private Conversation _conversation;
+    private LanguageTranslator _language_translator;
+    private string _translationModel = "ja-en";
 
     private string stt_username = "";
     private string stt_password = "";
@@ -51,18 +54,21 @@ public class SpeechSandboxStreaming : MonoBehaviour
     // Change convo_url if different from below
     // Use this for TLS1.0 required by Unity as of 4/25/18
     private string convo_url = "https://gateway-tls10.watsonplatform.net/conversation/api";
-    // Change  _conversationVersionDate if different from below
     private string _conversationVersionDate = "2017-05-26";
     private string convo_workspaceId = "";
 
-    public Text ResultsField;
+    private string lang_username = "";
+    private string lang_password = "";
+    // Change stt_url if different from below
+    private string lang_url = "https://gateway.watsonplatform.net/language-translator/api";
+
+    public string ResultsField = "";
 
     private int _recordingRoutine = 0;
     private string _microphoneID = null;
     private AudioClip _recording = null;
     private int _recordingBufferSize = 1;
     private int _recordingHZ = 22050;
-
 
     void Start()
     {
@@ -71,10 +77,13 @@ public class SpeechSandboxStreaming : MonoBehaviour
         //  Create credential and instantiate service
         Credentials stt_credentials = new Credentials(stt_username, stt_password, stt_url);
         Credentials convo_credentials = new Credentials(convo_username, convo_password, convo_url);
+	Credentials lang_credentials = new Credentials(lang_username, lang_password, lang_url);
 
         _speechToText = new SpeechToText(stt_credentials);
+	_speechToText.RecognizeModel = "ja-JP_BroadbandModel";
         _conversation = new Conversation(convo_credentials);
         _conversation.VersionDate = _conversationVersionDate;
+	_language_translator = new LanguageTranslator(lang_credentials);
         Active = true;
 
         StartRecording();
@@ -125,6 +134,21 @@ public class SpeechSandboxStreaming : MonoBehaviour
             Runnable.Stop(_recordingRoutine);
             _recordingRoutine = 0;
         }
+    }
+
+    private void Translate(string text)
+    {
+	Log.Debug("Translate()", "pre-translation: {0}", text);
+        _language_translator.GetTranslation(OnTranslate, OnFail, text, _translationModel);
+
+
+    }
+
+    private void OnTranslate(Translations response, Dictionary<string, object> customData)
+    {
+        string RetField = response.translations[0].translation;
+	Log.Debug("OnTranslate()", "post-translation: {0}" , RetField);
+        _conversation.Message(OnMessage, OnFail, convo_workspaceId, RetField);
     }
 
     private void OnError(string error)
@@ -209,7 +233,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
                     {
                         string text = alt.transcript;
                         Debug.Log("Result: " + text + " Confidence: " + alt.confidence);
-                        _conversation.Message(OnMessage, OnFail, convo_workspaceId, text);
+			Translate(text);
                     }
                 }
 
@@ -266,7 +290,6 @@ public class SpeechSandboxStreaming : MonoBehaviour
                     gameManager.MoveObject(direction);
                 }
             }
-
             if (intent == "create")
             {
                 bool createdObject = false;
@@ -304,6 +327,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
                 if (helpClips.Count > 0)
                 {
                     gameManager.PlayClip(helpClips[Random.Range(0, helpClips.Count)]);
+
                 }
             }
         }
