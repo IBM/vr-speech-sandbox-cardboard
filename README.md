@@ -62,19 +62,16 @@ In [IBM Cloud](https://console.ng.bluemix.net/):
 
 ## 3. Building and Running
 
-> Note: This has been compiled and tested using Unity 2017.2.0f3 and Watson Unity SDK from the Unity asset Store (or alternately use the develop branch)
+> Note: This has been compiled and tested using Unity 2017.2.0f3 and Watson Unity SDK from this repository. Using a newer version of the Watson Unity SDK, either from the Asset store or using `git pull` to get the latest, may result in compiler errors due to breaking changes.
 
-1. Either download the Watson Unity SDK from the Unity asset store or perform the following:
-`git clone https://github.com/watson-developer-cloud/unity-sdk.git`
-2. Open Unity and inside the project launcher select the ![Open](doc/source/images/unity_open.png?raw=true) button.
-3. Navigate to where you cloned this repository and open the `Creation Sandbox` directory.
-4. If prompted to upgrade the project to a newer Unity version, do so.
-5. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
-6. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Conversation services and find their credentials (using [IBM Cloud](https://console.ng.bluemix.net/)).
+1. Open Unity and inside the project launcher select the ![Open](doc/source/images/unity_open.png?raw=true) button.
+1. Navigate to where you cloned this repository and open the `Creation Sandbox` directory.
+1. If prompted to upgrade the project to a newer Unity version, do so.
+1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Conversation services and find their credentials (using [IBM Cloud](https://console.ng.bluemix.net/)).
  You can find your workspace ID by selecting the expansion menu on your conversation workspace and selecting `View details`.
     ![View Details Location](doc/source/images/workspace_details.png?raw=true)
-7. Open the script `vr-speech-sandbox-cardboard/SpeechSandbox/Assets/Scripts/SpeechSandboxStreaming.cs`
-8. Fill in the credentials for Speech to Text and Conversation, and the Conversation workspace id:
+1. Open the script `vr-speech-sandbox-cardboard/SpeechSandbox/Assets/Scripts/SpeechSandboxStreaming.cs`
+1. Fill in the credentials for Speech to Text and Conversation, and the Conversation workspace id:
 ```
     private string stt_username = "";
     private string stt_password = "";
