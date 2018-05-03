@@ -115,8 +115,7 @@ If you followed the previous steps you should already be inside your local clone
 ```
 Assets/Scripts/CreatableObject.cs(162,43): error CS0117: `GvrController' does not contain a definition for `Gyro'
 ```
-This is because you have your `Build Settings` -> `Platform` set to `PC, Mac, or Linux Standalone`. Solve this problem by changing the `Build Settings` -> `Platform` to `Android` and cli
-cking `Switch Platform`.
+This is because you have your `Build Settings` -> `Platform` set to `PC, Mac, or Linux Standalone`. Solve this problem by changing the `Build Settings` -> `Platform` to `Android` and clicking `Switch Platform`.
 
 # Links
 
