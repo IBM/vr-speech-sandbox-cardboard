@@ -62,11 +62,17 @@ In [IBM Cloud](https://console.ng.bluemix.net/):
 
 ## 3. Building and Running
 
-> Note: This has been compiled and tested using Unity 2017.2.0f3 and Watson Unity SDK from this repository. Using a newer version of the Watson Unity SDK, either from the Asset store or using `git pull` to get the latest, may result in compiler errors due to breaking changes.
+> Note: This has been compiled and tested using Unity 2017.4.1f3 and Watson Unity SDK from the Unity asset Store as of May 2, 2018 and tested with the `develop` branch of the github unity-sdk as of `commit 9b439ca57bdb May2`.
 
+1. Either download the Watson Unity SDK from the Unity asset store or perform the following:
+
+`git clone https://github.com/watson-developer-cloud/unity-sdk.git`
+
+For the github version make sure you are on the develop branch.
 1. Open Unity and inside the project launcher select the ![Open](doc/source/images/unity_open.png?raw=true) button.
 1. Navigate to where you cloned this repository and open the `Creation Sandbox` directory.
 1. If prompted to upgrade the project to a newer Unity version, do so.
+1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
 1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Conversation services and find their credentials (using [IBM Cloud](https://console.ng.bluemix.net/)).
  You can find your workspace ID by selecting the expansion menu on your conversation workspace and selecting `View details`.
     ![View Details Location](doc/source/images/workspace_details.png?raw=true)
@@ -89,11 +95,11 @@ In [IBM Cloud](https://console.ng.bluemix.net/):
 
 If you followed the previous steps you should already be inside your local clone and ready to get started running the app from Unity.
 
-9. In the Unity editor project tab, select _Assets_->_Scenes_->_Playground_ and double click to load the scene.
-10. Press Play
-11. To Build an android .apk file and deploy to your phone, you can _File_ -> _Build_ Settings (Ctrl + Shift +B) and click Build.
-12. When prompted you can name your build and then move it to your phone.
-13. Alternately, connect the phone via USB and _File_-> _Build and Run_ (or Ctrl+B).
+1. In the Unity editor project tab, select _Assets_->_Scenes_->_Playground_ and double click to load the scene.
+1. Press Play
+1. To Build an android .apk file and deploy to your phone, you can _File_ -> _Build_ Settings (Ctrl + Shift +B) and click Build.
+1. When prompted you can name your build and then move it to your phone.
+1. Alternately, connect the phone via USB and _File_-> _Build and Run_ (or Ctrl+B).
 
    *Make sure you have enabled USB Debugging:*
 
@@ -109,6 +115,11 @@ If you followed the previous steps you should already be inside your local clone
 
   * Open _Settings_-> _Apps_-> _SpeechSandboxCardboard_-> _Permissions_ and enable Microphone and Storage.
 
+# Links
+
+* [Demo on YouTube](https://youtu.be/OsbV1xqX0hQ)
+* [Watson Unity SDK](https://github.com/IBM/unity-sdk)
+
 # Troubleshooting
 
 * If you see:
@@ -117,10 +128,13 @@ Assets/Scripts/CreatableObject.cs(162,43): error CS0117: `GvrController' does no
 ```
 This is because you have your `Build Settings` -> `Platform` set to `PC, Mac, or Linux Standalone`. Solve this problem by changing the `Build Settings` -> `Platform` to `Android` and clicking `Switch Platform`.
 
-# Links
-
-* [Demo on YouTube](https://youtu.be/OsbV1xqX0hQ)
-* [Watson Unity SDK](https://github.com/IBM/unity-sdk)
+* If you see:
+```
+Assets/unity-sdk/Scripts/Utilities/Credentials.cs(399,51): error CS1061: Type `System.DateTimeOffset' does not contain a definition for `ToUnixTimeSeconds' and no extension method `ToUnixTimeSeconds' of type `System.DateTimeOffset' could be found. Are you missing an assembly reference?
+```
+The solution is to go to `Build Settings`->`Player Settings`->
+`Other Settings`->`Scripting Runtime Version` and change to:
+`Experimental(.NET 4.6 Equivalent)`.
 
 # Learn more
 
