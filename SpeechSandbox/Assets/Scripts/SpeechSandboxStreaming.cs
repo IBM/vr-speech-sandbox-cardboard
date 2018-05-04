@@ -51,6 +51,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
     // Change convo_url if different from below
     // Use this for TLS1.0 required by Unity as of 4/25/18
     private string convo_url = "https://gateway-tls10.watsonplatform.net/conversation/api";
+    // Change  _conversationVersionDate if different from below
     private string _conversationVersionDate = "2017-05-26";
     private string convo_workspaceId = "";
 
@@ -196,7 +197,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
         yield break;
     }
 
-    private void OnRecognize(SpeechRecognitionEvent result)
+    private void OnRecognize(SpeechRecognitionEvent result, Dictionary<string, object> customData = null)
     {
         if (result != null && result.results.Length > 0)
         {
@@ -265,6 +266,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
                     gameManager.MoveObject(direction);
                 }
             }
+
             if (intent == "create")
             {
                 bool createdObject = false;
@@ -302,7 +304,6 @@ public class SpeechSandboxStreaming : MonoBehaviour
                 if (helpClips.Count > 0)
                 {
                     gameManager.PlayClip(helpClips[Random.Range(0, helpClips.Count)]);
-
                 }
             }
         }
@@ -312,7 +313,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
         }
     }
 
-    private void OnRecognizeSpeaker(SpeakerRecognitionEvent result)
+    private void OnRecognizeSpeaker(SpeakerRecognitionEvent result, Dictionary<string, object> customData = null)
     {
         if (result != null)
         {
