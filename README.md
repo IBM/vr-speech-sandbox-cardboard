@@ -19,7 +19,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 1. User interacts in virtual reality and gives voice commands such as "Create a large black box".
 2. The Android phone microphone picks up the voice command and the running application sends it to Watson Speech-to-Text.
 3. Watson Speech-to-Text converts the audio to text and returns it to the running Application on the Android phone.
-4. The application sends the text to Watson Assistant. Watson conversation returns the recognized intent "Create" and the entities "large", "black", and "box". The virtual reality application then displays the large black box (which falls from the sky).
+4. The application sends the text to Watson Assistant. Watson assistant returns the recognized intent "Create" and the entities "large", "black", and "box". The virtual reality application then displays the large black box (which falls from the sky).
 
 # Watch the Video
 
@@ -62,7 +62,9 @@ In [IBM Cloud](https://console.ng.bluemix.net/):
 
 ## 3. Building and Running
 
-> Note: This has been compiled and tested using Unity 2017.4.1f3 and Watson Unity SDK from the Unity asset Store as of May 2, 2018 and tested with the `develop` branch of the github unity-sdk as of `commit 9b439ca57bdb May2`.
+> Note: This has been compiled and tested using Unity 2018.2.0f2 and Watson Unity SDK from the Unity asset Store as of July 24, 2018 and tested with the `develop` branch of the github unity-sdk as of `commit 44d8df33922 July 12`.
+
+> Note: If you are in *any* IBM Cloud region other than US-South you *must* use Unity 2018.2 or higher. This is because Unity 2018.2 or higher is needed for TLS 1.2, which is the only TLS version available in all regions other than US-South.
 
 1. Either download the Watson Unity SDK from the Unity asset store or perform the following:
 
@@ -73,27 +75,16 @@ For the github version make sure you are on the develop branch.
 1. Navigate to where you cloned this repository and open the `Creation Sandbox` directory.
 1. If prompted to upgrade the project to a newer Unity version, do so.
 1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
-1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Conversation services and find their credentials (using [IBM Cloud](https://console.ng.bluemix.net/)).
- You can find your workspace ID by selecting the expansion menu on your conversation workspace and selecting `View details`.
-    ![View Details Location](doc/source/images/workspace_details.png?raw=true)
-1. Open the script `vr-speech-sandbox-cardboard/SpeechSandbox/Assets/Scripts/SpeechSandboxStreaming.cs`
-1. Fill in the credentials for Speech to Text and Conversation, and the Conversation workspace id:
-```
-    private string stt_username = "";
-    private string stt_password = "";
-    // Change stt_url if different from below
-    private string stt_url = "https://stream.watsonplatform.net/speech-to-text/api";
+1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Watson Assistant services and find their credentials (using [IBM Cloud](https://console.bluemix.net)
+ You can find your workspace ID by selecting the expansion menu on your assistant workspace and selecting `View details`.
 
-    private string convo_username = "";
-    private string convo_password = "";
-    // Change convo_url if different from below
-    private string convo_url = "https://gateway.watsonplatform.net/conversation/api";
-    // Change  _conversationVersionDate if different from below
-    private string _conversationVersionDate = "2017-05-26";
-    private string convo_workspaceId = "";
-```
+    ![View Details Location](https://github.com/IBM/pattern-images/blob/master/watson-assistant/GetAssistantDetails.png)
 
-If you followed the previous steps you should already be inside your local clone and ready to get started running the app from Unity.
+1. In the Unity Hierarchy view, click on `Player` and then the `Streaming Speech` object.
+1. In the Inspector you will see Variables for `Speech To Text` and `Watson Assistant` and either `CF Authentication` for the Cloud Foundry username and password, or the `IAM Authentication` if you have the IAM apikey. Since you only have only one version of these credentials, fill out only one of the two for each service.
+1. Fill out the `Speech To Text Service Url`, the `Assistant Service Url`, the `Assistant Workspace Id`, and the `Assistant Version Date`. There are tool tips which will show help and any defaults.
+
+![](https://github.com/IBM/pattern-images/blob/master/Unity/UnitySpeechSandboxCreds.png)
 
 1. In the Unity editor project tab, select _Assets_->_Scenes_->_Playground_ and double click to load the scene.
 1. Press Play

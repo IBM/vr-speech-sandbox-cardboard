@@ -41,56 +41,50 @@ public class SpeechSandboxStreaming : MonoBehaviour
     [Header("Speech To Text")]
     [Tooltip("The service URL (optional). This defaults to \"https://stream.watsonplatform.net/speech-to-text/api\"")]
     [SerializeField]
-    private string stt_url = "https://stream.watsonplatform.net/speech-to-text/api";
+    private string speechToTextServiceUrl = "";
     [Header("CF Authentication")]
     [Tooltip("The authentication username.")]
     [SerializeField]
-    private string stt_username = "";
+    private string speechToTextUsername = "";
     [Tooltip("The authentication password.")]
     [SerializeField]
-    private string stt_password;
+    private string speechToTextPassword;
     [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
     [SerializeField]
-    private string stt_iamApikey;
+    private string speechToTextIamApikey;
     [Tooltip("The IAM url used to authenticate the apikey (optional). This defaults to \"https://iam.bluemix.net/identity/token\".")]
     [SerializeField]
-    private string stt_iamUrl;
+    private string speechToTextIamUrl;
 
     [Header("Watson Assistant")]
-    [Tooltip("The service URL (optional). This defaults to \"https://gateway.watsonplatform.net/conversation/api\"")]
+    [Tooltip("The service URL (optional). This defaults to \"https://gateway.watsonplatform.net/assistant/api\"")]
     [SerializeField]
-    private string asst_serviceUrl;
+    private string assistantServiceUrl;
     [Tooltip("The workspaceId to run the example.")]
     [SerializeField]
-    private string asst_workspaceID;
+    private string assistantWorkspaceId;
     [Tooltip("The version date with which you would like to use the service in the form YYYY-MM-DD. Current is 2018-07-10")]
     [SerializeField]
-    private string asst_versionDate;
+    private string assistantVersionDate;
     [Header("CF Authentication")]
     [Tooltip("The authentication username.")]
     [SerializeField]
-    private string asst_username;
+    private string assistantUsername;
     [Tooltip("The authentication password.")]
     [SerializeField]
-    private string asst_password;
-   // private string asst_url = "https://gateway-tls10.watsonplatform.net/conversation/api";
-    // Example uses \"https://gateway.watsonplatform.net/conversation/api\"
-    [Tooltip("The service URL (optional). This defaults to \"https://gateway.watsonplatform.net/conversation/api\"")]
-    [SerializeField]
-    private string asst_url = "https://gateway-wdc.watsonplatform.net/assistant/api";
+    private string assitantPassword;
 
     [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
     [SerializeField]
-    private string asst_iamApikey;
+    private string assistantIamApikey;
     [Tooltip("The IAM url used to authenticate the apikey (optional). This defaults to \"https://iam.bluemix.net/identity/token\".")]
     [SerializeField]
-    private string asst_iamUrl;
+    private string assistantIamUrl;
 
     #endregion
 
-    public Text ResultsField;
 
     private int _recordingRoutine = 0;
     private string _microphoneID = null;
@@ -101,56 +95,77 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private SpeechToText _speechToText;
     private Conversation _conversation;
 
+    private IEnumerator createServices(){
 
-    private IEnumerator CreateCredentials(Credentials credentials,string _username, string _password, string _serviceUrl, string _iamApikey, string _iamUrl)
-    {
+        Credentials stt_credentials = null;
         //  Create credential and instantiate service
-        if (!string.IsNullOrEmpty(_username) && !string.IsNullOrEmpty(_password))
+        if (!string.IsNullOrEmpty(speechToTextUsername) && !string.IsNullOrEmpty(speechToTextPassword))
         {
             //  Authenticate using username and password
-            credentials = new Credentials(_username, _password, _serviceUrl);
+            stt_credentials = new Credentials(speechToTextUsername, speechToTextPassword, speechToTextServiceUrl);
         }
-        else if (!string.IsNullOrEmpty(_iamApikey))
+        else if (!string.IsNullOrEmpty(speechToTextIamApikey))
         {
             //  Authenticate using iamApikey
             TokenOptions tokenOptions = new TokenOptions()
             {
-                IamApiKey = _iamApikey,
-                IamUrl = _iamUrl
+                IamApiKey = speechToTextIamApikey,
+                IamUrl = speechToTextIamUrl
             };
 
-            credentials = new Credentials(tokenOptions, _serviceUrl);
+            stt_credentials = new Credentials(tokenOptions, speechToTextServiceUrl);
 
-            //  Wait for tokendata
-            while (!credentials.HasIamTokenData()) 
-              yield return null;
-
+            while (!stt_credentials.HasIamTokenData())
+                yield return null;
         }
         else
         {
             throw new WatsonException("Please provide either username and password or IAM apikey to authenticate the service.");
         }
 
-    }
+        Credentials asst_credentials = null;
+        //  Create credential and instantiate service
+        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assitantPassword))
+        {
+            //  Authenticate using username and password
+            asst_credentials = new Credentials(assistantUsername, assitantPassword, assistantServiceUrl);
+        }
+        else if (!string.IsNullOrEmpty(assistantIamApikey))
+        {
+            //  Authenticate using iamApikey
+            TokenOptions tokenOptions = new TokenOptions()
+            {
+                IamApiKey = assistantIamApikey,
+                IamUrl = assistantIamUrl
+            };
 
+            asst_credentials = new Credentials(tokenOptions, assistantServiceUrl);
+
+            while (!asst_credentials.HasIamTokenData())
+                yield return null;
+        }
+        else
+        {
+            throw new WatsonException("Please provide either username and password or IAM apikey to authenticate the service.");
+        }
+
+
+        _speechToText = new SpeechToText(stt_credentials);
+        _conversation = new Conversation(asst_credentials);
+
+        _conversation.VersionDate = assistantVersionDate;
+        Active = true;
+
+        StartRecording();
+    }
 
     void Start()
     {
         LogSystem.InstallDefaultReactors();
 
-        Credentials stt_credentials = null;
-        Credentials convo_credentials = null;
 
         //  Create credential and instantiate service
-        CreateCredentials(stt_credentials, stt_username, stt_password, stt_url, stt_iamApikey, stt_iamUrl);
-        CreateCredentials(convo_credentials, asst_username, asst_password, asst_url, asst_iamApikey, asst_iamUrl);
-
-        _speechToText = new SpeechToText(stt_credentials);
-        _conversation = new Conversation(convo_credentials);
-        _conversation.VersionDate = asst_versionDate;
-        Active = true;
-
-        StartRecording();
+        Runnable.Run(createServices());
     }
 
     public bool Active
@@ -282,7 +297,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
                     {
                         string text = alt.transcript;
                         Debug.Log("Result: " + text + " Confidence: " + alt.confidence);
-                        _conversation.Message(OnMessage, OnFail, asst_workspaceID, text);
+                        _conversation.Message(OnMessage, OnFail, assistantWorkspaceId, text);
                     }
                 }
 
