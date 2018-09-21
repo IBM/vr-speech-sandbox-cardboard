@@ -24,7 +24,7 @@ using IBM.Watson.DeveloperCloud.DataTypes;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
-using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v2;
+using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v3;
 using FullSerializer;
 using IBM.Watson.DeveloperCloud.Connection;
 
@@ -39,30 +39,75 @@ public class SpeechSandboxStreaming : MonoBehaviour
 
     [SerializeField]
     private fsSerializer _serializer = new fsSerializer();
-    private SpeechToText _speechToText;
-    private Conversation _conversation;
-    private LanguageTranslator _language_translator;
-    private string _translationModel = "ja-en";
 
-    private string stt_username = "";
-    private string stt_password = "";
-    // Change stt_url if different from below
-    private string stt_url = "https://stream.watsonplatform.net/speech-to-text/api";
+    #region PLEASE SET THESE VARIABLES IN THE INSPECTOR
+    [Header("Speech To Text")]
+    [Tooltip("The service URL (optional). This defaults to \"https://stream.watsonplatform.net/speech-to-text/api\"")]
+    [SerializeField]
+    private string speechToTextServiceUrl = "";
+    [Header("CF Authentication")]
+    [Tooltip("The authentication username.")]
+    [SerializeField]
+    private string speechToTextUsername = "";
+    [Tooltip("The authentication password.")]
+    [SerializeField]
+    private string speechToTextPassword;
+    [Header("IAM Authentication")]
+    [Tooltip("The IAM apikey.")]
+    [SerializeField]
+    private string speechToTextIamApikey;
+    [Tooltip("The IAM url used to authenticate the apikey (optional). This defaults to \"https://iam.bluemix.net/identity/token\".")]
+    [SerializeField]
+    private string speechToTextIamUrl;
 
-    private string convo_username = "";
-    private string convo_password = "";
-    // Change convo_url if different from below
-    // Use this for TLS1.0 required by Unity as of 4/25/18
-    private string convo_url = "https://gateway-tls10.watsonplatform.net/conversation/api";
-    private string _conversationVersionDate = "2017-05-26";
-    private string convo_workspaceId = "";
+    [Header("Watson Assistant")]
+    [Tooltip("The service URL (optional). This defaults to \"https://gateway.watsonplatform.net/assistant/api\"")]
+    [SerializeField]
+    private string assistantServiceUrl;
+    [Tooltip("The workspaceId to run the example.")]
+    [SerializeField]
+    private string assistantWorkspaceId;
+    [Tooltip("The version date with which you would like to use the service in the form YYYY-MM-DD. Current is 2018-07-10")]
+    [SerializeField]
+    private string assistantVersionDate;
+    [Header("CF Authentication")]
+    [Tooltip("The authentication username.")]
+    [SerializeField]
+    private string assistantUsername;
+    [Tooltip("The authentication password.")]
+    [SerializeField]
+    private string assitantPassword;
+    [Header("IAM Authentication")]
+    [Tooltip("The IAM apikey.")]
+    [SerializeField]
+    private string assistantIamApikey;
+    [Tooltip("The IAM url used to authenticate the apikey (optional). This defaults to \"https://iam.bluemix.net/identity/token\".")]
+    [SerializeField]
+    private string assistantIamUrl;
 
-    private string lang_username = "";
-    private string lang_password = "";
-    // Change stt_url if different from below
-    private string lang_url = "https://gateway.watsonplatform.net/language-translator/api";
+    [Header("Watson Translator")]
+    [Tooltip("The service URL (optional). This defaults to \"https://gateway.watsonplatform.net/language-translator/api\".")]
+    [SerializeField]
+    private string translatorServiceUrl = "";
+    [Tooltip("The version date with which you would like to use the service in the form YYYY-MM-DD.")]
+    [SerializeField]
+    private string translatorVersionDate;
+    [Header("CF Authentication")]
+    [Tooltip("The authentication username.")]
+    [SerializeField]
+    private string translatorUsername = "";
+    [Tooltip("The authentication password.")]
+    [SerializeField]
+    private string translatorPassword;
+    [Header("IAM Authentication")]
+    [Tooltip("The IAM apikey.")]
+    [SerializeField]
+    private string translatorIamApikey = "";
+    [Tooltip("The IAM url used to authenticate the apikey (optional). This defaults to \"https://iam.bluemix.net/identity/token\".")]
+    [SerializeField]
+    private string translatorIamUrl;
 
-    public string ResultsField = "";
+    #endregion
 
     private int _recordingRoutine = 0;
     private string _microphoneID = null;
@@ -70,23 +115,116 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private int _recordingBufferSize = 1;
     private int _recordingHZ = 22050;
 
+    private SpeechToText _speechToText;
+    private Conversation _conversation;
+    private LanguageTranslator _language_translator;
+    private string _translationModel = "ja-en";
+
+    private IEnumerator createServices()
+    {
+
+        Credentials stt_credentials = null;
+        //  Create credential and instantiate service
+        if (!string.IsNullOrEmpty(speechToTextUsername) && !string.IsNullOrEmpty(speechToTextPassword))
+        {
+            //  Authenticate using username and password
+            stt_credentials = new Credentials(speechToTextUsername, speechToTextPassword, speechToTextServiceUrl);
+        }
+        else if (!string.IsNullOrEmpty(speechToTextIamApikey))
+        {
+            //  Authenticate using iamApikey
+            TokenOptions tokenOptions = new TokenOptions()
+            {
+                IamApiKey = speechToTextIamApikey,
+                IamUrl = speechToTextIamUrl
+            };
+
+            stt_credentials = new Credentials(tokenOptions, speechToTextServiceUrl);
+
+            while (!stt_credentials.HasIamTokenData())
+                yield return null;
+        }
+        else
+        {
+            throw new WatsonException("Please provide either username and password or IAM apikey to authenticate the service.");
+        }
+
+        Credentials asst_credentials = null;
+        //  Create credential and instantiate service
+        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assitantPassword))
+        {
+            //  Authenticate using username and password
+            asst_credentials = new Credentials(assistantUsername, assitantPassword, assistantServiceUrl);
+        }
+        else if (!string.IsNullOrEmpty(assistantIamApikey))
+        {
+            Log.Debug("createServices()", "IAM key", "key {0}", assistantIamApikey);
+            //  Authenticate using iamApikey
+            TokenOptions tokenOptions = new TokenOptions()
+            {
+                IamApiKey = assistantIamApikey,
+                IamUrl = assistantIamUrl
+            };
+
+            asst_credentials = new Credentials(tokenOptions, assistantServiceUrl);
+
+            while (!asst_credentials.HasIamTokenData())
+                yield return null;
+        }
+        else
+        {
+            throw new WatsonException("Please provide either username and password or IAM apikey to authenticate the service.");
+        }
+
+        Credentials lang_credentials = null;
+        //  Create credential and instantiate service
+        if (!string.IsNullOrEmpty(translatorUsername) && !string.IsNullOrEmpty(translatorPassword))
+        {
+            //  Authenticate using username and password
+            lang_credentials = new Credentials(translatorUsername, translatorPassword, translatorServiceUrl);
+        }
+        else if (!string.IsNullOrEmpty(translatorIamApikey))
+        {
+            Log.Debug("createServices()", "IAM key", "key {0}", translatorIamApikey);
+
+            //  Authenticate using iamApikey
+            TokenOptions tokenOptions = new TokenOptions()
+            {
+                IamApiKey = translatorIamApikey,
+                IamUrl = translatorIamUrl
+            };
+
+            lang_credentials = new Credentials(tokenOptions, translatorServiceUrl);
+
+            while (!lang_credentials.HasIamTokenData())
+                yield return null;
+
+            Log.Debug("createServices()", "lang_creds", " {0}", lang_credentials);
+        }
+        else
+        {
+            throw new WatsonException("Please provide either username and password or IAM apikey to authenticate the service.");
+        }
+
+        _speechToText = new SpeechToText(stt_credentials);
+        _conversation = new Conversation(asst_credentials);
+        _language_translator = new LanguageTranslator(translatorVersionDate, lang_credentials);
+
+        _speechToText.RecognizeModel = "ja-JP_BroadbandModel";
+        _conversation.VersionDate = assistantVersionDate;
+
+        Active = true;
+
+        StartRecording();
+    }
+
     void Start()
     {
         LogSystem.InstallDefaultReactors();
 
         //  Create credential and instantiate service
-        Credentials stt_credentials = new Credentials(stt_username, stt_password, stt_url);
-        Credentials convo_credentials = new Credentials(convo_username, convo_password, convo_url);
-	Credentials lang_credentials = new Credentials(lang_username, lang_password, lang_url);
+        Runnable.Run(createServices());
 
-        _speechToText = new SpeechToText(stt_credentials);
-	_speechToText.RecognizeModel = "ja-JP_BroadbandModel";
-        _conversation = new Conversation(convo_credentials);
-        _conversation.VersionDate = _conversationVersionDate;
-	_language_translator = new LanguageTranslator(lang_credentials);
-        Active = true;
-
-        StartRecording();
     }
 
     public bool Active
@@ -148,7 +286,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
     {
         string RetField = response.translations[0].translation;
 	Log.Debug("OnTranslate()", "post-translation: {0}" , RetField);
-        _conversation.Message(OnMessage, OnFail, convo_workspaceId, RetField);
+        _conversation.Message(OnMessage, OnFail, assistantWorkspaceId, RetField);
     }
 
     private void OnError(string error)
@@ -233,7 +371,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
                     {
                         string text = alt.transcript;
                         Debug.Log("Result: " + text + " Confidence: " + alt.confidence);
-			Translate(text);
+                        Translate(text);
                     }
                 }
 
