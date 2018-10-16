@@ -73,7 +73,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private string assistantUsername;
     [Tooltip("The authentication password.")]
     [SerializeField]
-    private string assitantPassword;
+    private string assistantPassword;
 
     [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
@@ -125,10 +125,10 @@ public class SpeechSandboxStreaming : MonoBehaviour
 
         Credentials asst_credentials = null;
         //  Create credential and instantiate service
-        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assitantPassword))
+        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assistantPassword))
         {
             //  Authenticate using username and password
-            asst_credentials = new Credentials(assistantUsername, assitantPassword, assistantServiceUrl);
+            asst_credentials = new Credentials(assistantUsername, assistantPassword, assistantServiceUrl);
         }
         else if (!string.IsNullOrEmpty(assistantIamApikey))
         {
