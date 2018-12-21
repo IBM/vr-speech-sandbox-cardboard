@@ -31,9 +31,9 @@ Deseja levar seu aplicativo do Watson ao próximo nível? Quer aproveitar os ati
 Na sua máquina local:
 1. `git clone https://github.com/IBM/vr-speech-sandbox-cardboard.git`
 2. `cd vr-speech-sandbox-cardboard`
-No [Bluemix](https://console.ng.bluemix.net/):
-1. Crie uma instância de serviço do [Speech-To-Text](https://console.ng.bluemix.net/catalog/speech-to-text/).
-2. Crie uma instância de serviço do [Assistant](https://console.ng.bluemix.net/catalog/services/conversation/).
+No [Bluemix](https://cloud.ibm.com/):
+1. Crie uma instância de serviço do [Speech-To-Text](https://cloud.ibm.com/catalog/speech-to-text/).
+2. Crie uma instância de serviço do [Assistant](https://cloud.ibm.com/catalog/services/conversation/).
 3. Quando vir os serviços no painel, selecione o serviço Assistant que foi criado e clique no botão ![Launch Tool](/doc/source/images/workspace_launch.png?raw=true).
 4. Depois de efetuar login na Assistant Tool, clique no botão ![Import](/doc/source/images/import_icon.png?raw=true).
 5. Importe o arquivo do Assistant [`workspace.json`](data/workspace.json) localizado no seu clone deste repositório.
@@ -44,7 +44,7 @@ Se você seguiu as etapas anteriores, já deve estar dentro do seu clone local e
 3. Navegue até o local no qual clonou este repositório e abra o diretório “SpeechSandbox”.
 4. Se for exibido um prompt pedindo para fazer upgrade do projeto para uma versão mais recente do Unity, faça isso.
 5. Siga [estas instruções](https://github.com/IBM/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) para incluir no projeto o SDK do Watson Unity transferido por download na 1ª etapa.
-6. Siga [estas instruções](https://github.com/IBM/unity-sdk#configuring-your-service-credentials) para incluir suas credenciais dos serviços Speech To Text e Assistant (localizadas no [IBM Bluemix](https://console.ng.bluemix.net/)).
+6. Siga [estas instruções](https://github.com/IBM/unity-sdk#configuring-your-service-credentials) para incluir suas credenciais dos serviços Speech To Text e Assistant (localizadas no [IBM Bluemix](https://cloud.ibm.com/)).
 7. Selecione `Advanced Mode` na janela de configuração. 8. Abra o script vr-speech-sandbox-cardboard/SpeechSandbox/Assests/Scripts/VoiceSpawner.cs e insira seu ID da área de trabalho na linha nº 34 no método Start(). Para localizar o ID da área de trabalho, selecione o menu de expansão na área de trabalho do Assistant e selecione `View details`. ![View Details Location](doc/source/images/workspace_details.png?raw=true) 9. Na guia do projeto do editor do Unity, selecione Assets-&gt;Scenes-&gt;MainGame-&gt;MainMenu e clique duas vezes para carregar a cena.
 10. Pressione Play.
 11. Para desenvolver um arquivo .apk do Android e implementar no seu telefone, é possível selecionar File -&gt; Build Settings (Ctrl + Shift +B) e clicar em Build.

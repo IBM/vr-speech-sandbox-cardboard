@@ -52,10 +52,10 @@ git clone https://github.com/IBM/vr-speech-sandbox-cardboard.git
 cd vr-speech-sandbox-cardboard
 ```
 
-In [IBM Cloud](https://console.ng.bluemix.net/):
+In [IBM Cloud](https://cloud.ibm.com/):
 
-* Create a [Speech-To-Text](https://console.bluemix.net/catalog/services/speech-to-text) service instance.
-* Create an [Assistant](https://console.ng.bluemix.net/catalog/services/conversation/) service instance.
+* Create a [Speech-To-Text](https://cloud.ibm.com/catalog/services/speech-to-text) service instance.
+* Create an [Assistant](https://cloud.ibm.com/catalog/services/conversation/) service instance.
 
 #### Import the Assistant workspace.json:
 
@@ -99,7 +99,7 @@ For the github version make sure you are on the develop branch.
 1. Navigate to where you cloned this repository and open the `Creation Sandbox` directory.
 1. If prompted to upgrade the project to a newer Unity version, do so.
 1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
-1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Watson Assistant services and find their credentials (using [IBM Cloud](https://console.bluemix.net)
+1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Watson Assistant services and find their credentials (using [IBM Cloud](https://cloud.ibm.com)
 1. In the Unity Hierarchy view, click on `Assets` -> `Scenes` -> `Playground` and double-click to load the scene.
 1. In the Unity Hierarchy view, click on `Player` and then the `Streaming Speech` object.
 1. In the Inspector you will see Variables for `Speech To Text` and `Watson Assistant` and either `CF Authentication` for the Cloud Foundry username and password, or the `IAM Authentication` if you have the IAM apikey. Since you only have only one version of these credentials, fill out only one of the two for each service.

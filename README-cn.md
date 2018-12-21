@@ -59,11 +59,11 @@
 
 2.`cd vr-speech-sandbox-cardboard`
 
-在 [IBM Cloud](https://console.ng.bluemix.net/) 中：
+在 [IBM Cloud](https://cloud.ibm.com/) 中：
 
-1.创建 [Speech-To-Text](https://console.ng.bluemix.net/catalog/speech-to-text/) 服务实例。
+1.创建 [Speech-To-Text](https://cloud.ibm.com/catalog/speech-to-text/) 服务实例。
 
-2.创建 [Conversation](https://console.ng.bluemix.net/catalog/services/conversation/) 服务实例。
+2.创建 [Conversation](https://cloud.ibm.com/catalog/services/conversation/) 服务实例。
 
 3.在仪表盘中看到服务后，就可以选择您创建的 Conversation 服务，然后单击 !["Launch Tool"](/doc/source/images/workspace_launch.png?raw=true) 按钮。
 
@@ -87,7 +87,7 @@
 
 6.遵循[这些指示信息](https://github.com/IBM/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity)将步骤 1 中下载的 Watson Unity SDK 添加到该项目。
 
-7.遵循[这些指示信息](https://github.com/IBM/unity-sdk#configuring-your-service-credentials)来添加 Speech To Text 和 Conversation 服务凭证（位于 [IBM Cloud](https://console.ng.bluemix.net/) 中）。
+7.遵循[这些指示信息](https://github.com/IBM/unity-sdk#configuring-your-service-credentials)来添加 Speech To Text 和 Conversation 服务凭证（位于 [IBM Cloud](https://cloud.ibm.com/) 中）。
 
 8.在配置窗口中选择 `Advanced Mode`。
 
