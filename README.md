@@ -96,7 +96,7 @@ git clone https://github.com/watson-developer-cloud/unity-sdk.git
 
 Make sure you are on the develop branch.
 1. Open Unity and inside the project launcher select the ![Open](doc/source/images/unity_open.png?raw=true) button.
-1. Navigate to where you cloned this repository and open the `Creation Sandbox` directory.
+1. Navigate to where you cloned this repository and open the `SpeechSandbox` directory.
 1. If prompted to upgrade the project to a newer Unity version, do so.
 1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#getting-the-watson-sdk-and-adding-it-to-unity) to add the Watson Unity SDK downloaded in step 1 to the project.
 1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Watson Assistant services and find their credentials (using [IBM Cloud](https://cloud.ibm.com)
