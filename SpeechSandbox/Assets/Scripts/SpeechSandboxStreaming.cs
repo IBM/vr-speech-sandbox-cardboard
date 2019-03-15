@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -73,7 +73,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private string assistantUsername;
     [Tooltip("The authentication password.")]
     [SerializeField]
-    private string assistantPassword;
+    private string assitantPassword;
 
     [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
@@ -125,10 +125,10 @@ public class SpeechSandboxStreaming : MonoBehaviour
 
         Credentials asst_credentials = null;
         //  Create credential and instantiate service
-        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assistantPassword))
+        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assitantPassword))
         {
             //  Authenticate using username and password
-            asst_credentials = new Credentials(assistantUsername, assistantPassword, assistantServiceUrl);
+            asst_credentials = new Credentials(assistantUsername, assitantPassword, assistantServiceUrl);
         }
         else if (!string.IsNullOrEmpty(assistantIamApikey))
         {
