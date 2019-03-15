@@ -73,7 +73,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private string assistantUsername;
     [Tooltip("The authentication password.")]
     [SerializeField]
-    private string assitantPassword;
+    private string assistantPassword;
 
     [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
