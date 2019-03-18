@@ -14,6 +14,7 @@
 * limitations under the License.
 *
 */
+#pragma warning disable 0649
 
 using UnityEngine;
 using System.Collections;
@@ -38,51 +39,36 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private fsSerializer _serializer = new fsSerializer();
 
     #region PLEASE SET THESE VARIABLES IN THE INSPECTOR
+    [Space(10)]
     [Header("Speech To Text")]
     [Tooltip("The service URL (optional). This defaults to \"https://stream.watsonplatform.net/speech-to-text/api\"")]
     [SerializeField]
-    private string speechToTextServiceUrl = "";
-    [Header("CF Authentication")]
-    [Tooltip("The authentication username.")]
-    [SerializeField]
-    private string speechToTextUsername = "";
-    [Tooltip("The authentication password.")]
-    [SerializeField]
-    private string speechToTextPassword;
+    private string speechToTextServiceUrl;
     [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
     [SerializeField]
     private string speechToTextIamApikey;
-    [Tooltip("The IAM url used to authenticate the apikey (optional). This defaults to \"https://iam.bluemix.net/identity/token\".")]
+    [Header("Parameters")]
+    // https://www.ibm.com/watson/developercloud/speech-to-text/api/v1/curl.html?curl#get-model
+    [Tooltip("The Model to use. This defaults to en-US_BroadbandModel")]
     [SerializeField]
-    private string speechToTextIamUrl;
+    private string speechToTextRecognizeModel;
 
+    [Space(10)]
     [Header("Watson Assistant")]
-    [Tooltip("The service URL (optional). This defaults to \"https://gateway.watsonplatform.net/assistant/api\"")]
+    [Tooltip("The service URL(optional). This defaults to \"https://gateway.watsonplatform.net/assistant/api\"")]
     [SerializeField]
     private string assistantServiceUrl;
-    [Tooltip("The workspaceId to run the example.")]
+    [Tooltip("The workspaceId")]
     [SerializeField]
     private string assistantWorkspaceId;
-    [Tooltip("The version date with which you would like to use the service in the form YYYY-MM-DD. Current is 2018-07-10")]
+    [Tooltip("The version date with which you would like to use the service in the form YYYY-MM-DD.")]
     [SerializeField]
     private string assistantVersionDate;
-    [Header("CF Authentication")]
-    [Tooltip("The authentication username.")]
-    [SerializeField]
-    private string assistantUsername;
-    [Tooltip("The authentication password.")]
-    [SerializeField]
-    private string assistantPassword;
-
     [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
     [SerializeField]
     private string assistantIamApikey;
-    [Tooltip("The IAM url used to authenticate the apikey (optional). This defaults to \"https://iam.bluemix.net/identity/token\".")]
-    [SerializeField]
-    private string assistantIamUrl;
-
     #endregion
 
 
@@ -95,22 +81,26 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private SpeechToText _speechToText;
     private Conversation _conversation;
 
+    void Start()
+    {
+        LogSystem.InstallDefaultReactors();
+
+
+        //  Create credential and instantiate service
+        Runnable.Run(createServices());
+    }
+
+
     private IEnumerator createServices(){
 
         Credentials stt_credentials = null;
         //  Create credential and instantiate service
-        if (!string.IsNullOrEmpty(speechToTextUsername) && !string.IsNullOrEmpty(speechToTextPassword))
-        {
-            //  Authenticate using username and password
-            stt_credentials = new Credentials(speechToTextUsername, speechToTextPassword, speechToTextServiceUrl);
-        }
-        else if (!string.IsNullOrEmpty(speechToTextIamApikey))
+        if (!string.IsNullOrEmpty(speechToTextIamApikey))
         {
             //  Authenticate using iamApikey
             TokenOptions tokenOptions = new TokenOptions()
             {
                 IamApiKey = speechToTextIamApikey,
-                IamUrl = speechToTextIamUrl
             };
 
             stt_credentials = new Credentials(tokenOptions, speechToTextServiceUrl);
@@ -125,18 +115,12 @@ public class SpeechSandboxStreaming : MonoBehaviour
 
         Credentials asst_credentials = null;
         //  Create credential and instantiate service
-        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assistantPassword))
-        {
-            //  Authenticate using username and password
-            asst_credentials = new Credentials(assistantUsername, assistantPassword, assistantServiceUrl);
-        }
-        else if (!string.IsNullOrEmpty(assistantIamApikey))
+        if (!string.IsNullOrEmpty(assistantIamApikey))
         {
             //  Authenticate using iamApikey
             TokenOptions tokenOptions = new TokenOptions()
             {
                 IamApiKey = assistantIamApikey,
-                IamUrl = assistantIamUrl
             };
 
             asst_credentials = new Credentials(tokenOptions, assistantServiceUrl);
@@ -159,15 +143,8 @@ public class SpeechSandboxStreaming : MonoBehaviour
         StartRecording();
     }
 
-    void Start()
-    {
-        LogSystem.InstallDefaultReactors();
-
-
-        //  Create credential and instantiate service
-        Runnable.Run(createServices());
-    }
-
+    
+    
     public bool Active
     {
         get { return _speechToText.IsListening; }
@@ -215,7 +192,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
         }
     }
 
-    private void OnError(string error)
+   private void OnError(string error)
     {
         Active = false;
 
@@ -226,6 +203,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
     {
         Log.Error("ExampleConversation.OnFail()", "Error received: {0}", error.ToString());
     }
+
 
     private IEnumerator RecordingHandler()
     {
@@ -284,6 +262,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
 
         yield break;
     }
+
 
     private void OnRecognize(SpeechRecognitionEvent result, Dictionary<string, object> customData = null)
     {
@@ -401,13 +380,13 @@ public class SpeechSandboxStreaming : MonoBehaviour
         }
     }
 
-    private void OnRecognizeSpeaker(SpeakerRecognitionEvent result, Dictionary<string, object> customData = null)
+    private void OnRecognizeSpeaker(SpeakerRecognitionEvent result, Dictionary<string, object> customData)
     {
         if (result != null)
         {
             foreach (SpeakerLabelsResult labelResult in result.speaker_labels)
             {
-                Log.Debug("ExampleStreaming.OnRecognize()", string.Format("speaker result: {0} | confidence: {3} | from: {1} | to: {2}", labelResult.speaker, labelResult.from, labelResult.to, labelResult.confidence));
+                Log.Debug("ExampleStreaming.OnRecognizeSpeaker()", string.Format("speaker result: {0} | confidence: {3} | from: {1} | to: {2}", labelResult.speaker, labelResult.from, labelResult.to, labelResult.confidence));
             }
         }
     }
