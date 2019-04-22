@@ -17,15 +17,15 @@
 
 using UnityEngine;
 using System.Collections;
-using IBM.Watson.DeveloperCloud.Logging;
-using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
-using IBM.Watson.DeveloperCloud.Utilities;
-using IBM.Watson.DeveloperCloud.DataTypes;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
-using FullSerializer;
-using IBM.Watson.DeveloperCloud.Connection;
+using IBM.Cloud.SDK.Connection;
+using IBM.Watson.SpeechToText.V1;
+using IBM.Cloud.SDK;
+using IBM.Cloud.SDK.Utilities;
+using IBM.Cloud.SDK.DataTypes;
+using static IBM.Cloud.SDK.Widgetss.Widget;
+using IBM.Watson.Assistant.V2.Model;
+using IBM.Watson.Assistant.V2;
 
 public class SpeechSandboxStreaming : MonoBehaviour
 {
@@ -35,21 +35,11 @@ public class SpeechSandboxStreaming : MonoBehaviour
     public List<AudioClip> helpClips;
 
     [SerializeField]
-    private fsSerializer _serializer = new fsSerializer();
 
     #region PLEASE SET THESE VARIABLES IN THE INSPECTOR
     [Header("Speech To Text")]
     [Tooltip("The service URL (optional). This defaults to \"https://stream.watsonplatform.net/speech-to-text/api\"")]
-    [SerializeField]
     private string speechToTextServiceUrl = "";
-    [Header("CF Authentication")]
-    [Tooltip("The authentication username.")]
-    [SerializeField]
-    private string speechToTextUsername = "";
-    [Tooltip("The authentication password.")]
-    [SerializeField]
-    private string speechToTextPassword;
-    [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
     [SerializeField]
     private string speechToTextIamApikey;
@@ -61,21 +51,13 @@ public class SpeechSandboxStreaming : MonoBehaviour
     [Tooltip("The service URL (optional). This defaults to \"https://gateway.watsonplatform.net/assistant/api\"")]
     [SerializeField]
     private string assistantServiceUrl;
-    [Tooltip("The workspaceId to run the example.")]
+    [Tooltip("The Assistant ID to run the example.")]
     [SerializeField]
-    private string assistantWorkspaceId;
+    private string assistantId;
     [Tooltip("The version date with which you would like to use the service in the form YYYY-MM-DD. Current is 2018-07-10")]
     [SerializeField]
     private string assistantVersionDate;
-    [Header("CF Authentication")]
-    [Tooltip("The authentication username.")]
-    [SerializeField]
-    private string assistantUsername;
-    [Tooltip("The authentication password.")]
-    [SerializeField]
-    private string assistantPassword;
 
-    [Header("IAM Authentication")]
     [Tooltip("The IAM apikey.")]
     [SerializeField]
     private string assistantIamApikey;
@@ -92,19 +74,20 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private int _recordingBufferSize = 1;
     private int _recordingHZ = 22050;
 
-    private SpeechToText _speechToText;
-    private Conversation _conversation;
+    private bool createSessionTested = false;
+    private bool deleteSessionTested = false;
+    private string sessionId;
+
+    private SpeechToTextService _speechToText;
+    private AssistantService _assistant;
+
+    private bool messageTested0 = false;
 
     private IEnumerator createServices(){
 
         Credentials stt_credentials = null;
         //  Create credential and instantiate service
-        if (!string.IsNullOrEmpty(speechToTextUsername) && !string.IsNullOrEmpty(speechToTextPassword))
-        {
-            //  Authenticate using username and password
-            stt_credentials = new Credentials(speechToTextUsername, speechToTextPassword, speechToTextServiceUrl);
-        }
-        else if (!string.IsNullOrEmpty(speechToTextIamApikey))
+        if (!string.IsNullOrEmpty(speechToTextIamApikey))
         {
             //  Authenticate using iamApikey
             TokenOptions tokenOptions = new TokenOptions()
@@ -120,23 +103,18 @@ public class SpeechSandboxStreaming : MonoBehaviour
         }
         else
         {
-            throw new WatsonException("Please provide either username and password or IAM apikey to authenticate the service.");
+            throw new IBMException("Please provide IAM ApiKey for the Speech To Text service.");
         }
 
         Credentials asst_credentials = null;
         //  Create credential and instantiate service
-        if (!string.IsNullOrEmpty(assistantUsername) && !string.IsNullOrEmpty(assistantPassword))
-        {
-            //  Authenticate using username and password
-            asst_credentials = new Credentials(assistantUsername, assistantPassword, assistantServiceUrl);
-        }
-        else if (!string.IsNullOrEmpty(assistantIamApikey))
+
+        if (!string.IsNullOrEmpty(assistantIamApikey))
         {
             //  Authenticate using iamApikey
             TokenOptions tokenOptions = new TokenOptions()
             {
-                IamApiKey = assistantIamApikey,
-                IamUrl = assistantIamUrl
+                IamApiKey = assistantIamApikey
             };
 
             asst_credentials = new Credentials(tokenOptions, assistantServiceUrl);
@@ -146,15 +124,22 @@ public class SpeechSandboxStreaming : MonoBehaviour
         }
         else
         {
-            throw new WatsonException("Please provide either username and password or IAM apikey to authenticate the service.");
+            throw new IBMException("Please provide IAM ApiKey for the Watson Assistant service.");
         }
 
 
-        _speechToText = new SpeechToText(stt_credentials);
-        _conversation = new Conversation(asst_credentials);
+        _speechToText = new SpeechToTextService(stt_credentials);
+        _assistant = new AssistantService(assistantVersionDate, asst_credentials);
 
-        _conversation.VersionDate = assistantVersionDate;
+        _assistant.VersionDate = assistantVersionDate;
         Active = true;
+
+        _assistant.CreateSession(OnCreateSession, assistantId);
+
+        while (!createSessionTested)
+        {
+            yield return null;
+        }
 
         StartRecording();
     }
@@ -166,6 +151,8 @@ public class SpeechSandboxStreaming : MonoBehaviour
 
         //  Create credential and instantiate service
         Runnable.Run(createServices());
+
+
     }
 
     public bool Active
@@ -219,17 +206,19 @@ public class SpeechSandboxStreaming : MonoBehaviour
     {
         Active = false;
 
-        Log.Debug("ExampleStreaming.OnError()", "Error! {0}", error);
+        Log.Debug("SpeechSandboxStreaming.OnError()", "Error! {0}", error);
     }
 
+    /*
     private void OnFail(RESTConnector.Error error, Dictionary<string, object> customData)
     {
-        Log.Error("ExampleConversation.OnFail()", "Error received: {0}", error.ToString());
+        Log.Error("SpeechSandboxStreaming.OnFail()", "Error received: {0}", error.ToString());
     }
+    */
 
     private IEnumerator RecordingHandler()
     {
-        Log.Debug("ExampleStreaming.RecordingHandler()", "devices: {0}", Microphone.devices);
+        Log.Debug("SpeechSandboxStreaming.RecordingHandler()", "devices: {0}", Microphone.devices);
         _recording = Microphone.Start(_microphoneID, true, _recordingBufferSize, _recordingHZ);
         yield return null;      // let _recordingRoutine get set..
 
@@ -248,7 +237,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
             int writePos = Microphone.GetPosition(_microphoneID);
             if (writePos > _recording.samples || !Microphone.IsRecording(_microphoneID))
             {
-                Log.Error("ExampleStreaming.RecordingHandler()", "Microphone disconnected.");
+                Log.Error("SpeechSandboxStreaming.RecordingHandler()", "Microphone disconnected.");
 
                 StopRecording();
                 yield break;
@@ -285,7 +274,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
         yield break;
     }
 
-    private void OnRecognize(SpeechRecognitionEvent result, Dictionary<string, object> customData = null)
+    private void OnRecognize(SpeechRecognitionEvent result)
     {
         if (result != null && result.results.Length > 0)
         {
@@ -295,9 +284,20 @@ public class SpeechSandboxStreaming : MonoBehaviour
                 {
                     if (res.final && alt.confidence > 0)
                     {
-                        string text = alt.transcript;
-                        Debug.Log("Result: " + text + " Confidence: " + alt.confidence);
-                        _conversation.Message(OnMessage, OnFail, assistantWorkspaceId, text);
+                        string transcript_text = alt.transcript;
+                        Debug.Log("Result: " + transcript_text + " Confidence: " + alt.confidence);
+
+                        var input = new MessageInput()
+                        {
+                            Text = transcript_text,
+                            Options = new MessageInputOptions()
+                            {
+                                ReturnContext = false
+                            }
+                        };
+                        Debug.Log("Input to Assistant:" + input.Text);
+
+                        _assistant.Message(OnMessage,  assistantId, sessionId, input);
                     }
                 }
 
@@ -305,7 +305,7 @@ public class SpeechSandboxStreaming : MonoBehaviour
                 {
                     foreach (var keyword in res.keywords_result.keyword)
                     {
-                        Log.Debug("ExampleStreaming.OnRecognize()", "keyword: {0}, confidence: {1}, start time: {2}, end time: {3}", keyword.normalized_text, keyword.confidence, keyword.start_time, keyword.end_time);
+                        Log.Debug("SpeechSandboxStreaming.OnRecognize()", "keyword: {0}, confidence: {1}, start time: {2}, end time: {3}", keyword.normalized_text, keyword.confidence, keyword.start_time, keyword.end_time);
                     }
                 }
 
@@ -313,44 +313,36 @@ public class SpeechSandboxStreaming : MonoBehaviour
                 {
                     foreach (var wordAlternative in res.word_alternatives)
                     {
-                        Log.Debug("ExampleStreaming.OnRecognize()", "Word alternatives found. Start time: {0} | EndTime: {1}", wordAlternative.start_time, wordAlternative.end_time);
+                        Log.Debug("SpeechSandboxStreaming.OnRecognize()", "Word alternatives found. Start time: {0} | EndTime: {1}", wordAlternative.start_time, wordAlternative.end_time);
                         foreach(var alternative in wordAlternative.alternatives)
-                            Log.Debug("ExampleStreaming.OnRecognize()", "\t word: {0} | confidence: {1}", alternative.word, alternative.confidence);
+                            Log.Debug("SpeechSandboxStreaming.OnRecognize()", "\t word: {0} | confidence: {1}", alternative.word, alternative.confidence);
                     }
                 }
             }
         }
     }
 
-    void OnMessage(object resp, Dictionary<string, object> customData)
+    private void OnMessage0(DetailedResponse<MessageResponse> resp, IBMError error)
     {
-        //  Convert resp to fsdata
+        Log.Debug("SpeechSandboxStreaming.OnMessage0()", "response: {0}", resp.Result.Output.Entities[0].Entity);
+        messageTested0 = true;
+    }
 
-        fsData fsdata = null;
-        fsResult r = _serializer.TrySerialize(resp.GetType(), resp, out fsdata);
-        if (!r.Succeeded)
-            throw new WatsonException(r.FormattedMessages);
-
-        //  Convert fsdata to MessageResponse
-        MessageResponse messageResponse = new MessageResponse();
-        object obj = messageResponse;
-        r = _serializer.TryDeserialize(fsdata, obj.GetType(), ref obj);
-        if (!r.Succeeded)
-            throw new WatsonException(r.FormattedMessages);
-
-        if (resp != null && (messageResponse.intents.Length > 0 || messageResponse.entities.Length > 0))
+    void OnMessage(DetailedResponse<MessageResponse> resp, IBMError error)
+    {
+        if (resp != null && resp.Result.Output.Intents.Count  != 0 )
         {
-            string intent = messageResponse.intents[0].intent;
+            string intent = resp.Result.Output.Intents[0].Intent;
             Debug.Log("Intent: " + intent);
             string currentMat = null;
             string currentScale = null;
             string direction = null;
             if (intent == "move")
             {
-                foreach (RuntimeEntity entity in messageResponse.entities)
+                foreach (RuntimeEntity entity in resp.Result.Output.Entities)
                 {
-                    Debug.Log("entityType: " + entity.entity + " , value: " + entity.value);
-                    direction = entity.value;
+                    Debug.Log("entityType: " + entity.Entity + " , value: " + entity.Value);
+                    direction = entity.Value;
                     gameManager.MoveObject(direction);
                 }
             }
@@ -358,20 +350,20 @@ public class SpeechSandboxStreaming : MonoBehaviour
             if (intent == "create")
             {
                 bool createdObject = false;
-                foreach (RuntimeEntity entity in messageResponse.entities)
+                foreach (RuntimeEntity entity in resp.Result.Output.Entities)
                 {
-                    Debug.Log("entityType: " + entity.entity + " , value: " + entity.value);
-                    if (entity.entity == "material")
+                    Debug.Log("entityType: " + entity.Entity + " , value: " + entity.Value);
+                    if (entity.Entity == "material")
                     {
-                        currentMat = entity.value;
+                        currentMat = entity.Value;
                     }
-                    if (entity.entity == "scale")
+                    if (entity.Entity == "scale")
                     {
-                        currentScale = entity.value;
+                        currentScale = entity.Value;
                     }
-                    else if (entity.entity == "object")
+                    else if (entity.Entity == "object")
                     {
-                        gameManager.CreateObject(entity.value, currentMat, currentScale);
+                        gameManager.CreateObject(entity.Value, currentMat, currentScale);
                         createdObject = true;
                         currentMat = null;
                         currentScale = null;
@@ -401,13 +393,26 @@ public class SpeechSandboxStreaming : MonoBehaviour
         }
     }
 
-    private void OnRecognizeSpeaker(SpeakerRecognitionEvent result, Dictionary<string, object> customData = null)
+    private void OnDeleteSession(DetailedResponse<object> response, IBMError error)
+    {
+        Log.Debug("ExampleAssistantV2.OnDeleteSession()", "Session deleted.");
+        deleteSessionTested = true;
+    }
+
+    private void OnCreateSession(DetailedResponse<SessionResponse> response, IBMError error)
+    {
+        Log.Debug("ExampleAssistantV2.OnCreateSession()", "Session: {0}", response.Result.SessionId);
+        sessionId = response.Result.SessionId;
+        createSessionTested = true;
+    }
+
+    private void OnRecognizeSpeaker(SpeakerRecognitionEvent result)
     {
         if (result != null)
         {
             foreach (SpeakerLabelsResult labelResult in result.speaker_labels)
             {
-                Log.Debug("ExampleStreaming.OnRecognize()", string.Format("speaker result: {0} | confidence: {3} | from: {1} | to: {2}", labelResult.speaker, labelResult.from, labelResult.to, labelResult.confidence));
+                Log.Debug("SpeechSandboxStreaming.OnRecognize()", string.Format("speaker result: {0} | confidence: {3} | from: {1} | to: {2}", labelResult.speaker, labelResult.from, labelResult.to, labelResult.confidence));
             }
         }
     }
