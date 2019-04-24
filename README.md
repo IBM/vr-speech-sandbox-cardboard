@@ -57,7 +57,7 @@ In [IBM Cloud](https://cloud.ibm.com):
 * Create a [Speech-To-Text](https://cloud.ibm.com/catalog/services/speech-to-text) service instance.
 * Create an [Assistant](https://cloud.ibm.com/catalog/services/conversation/) service instance.
 
-#### Import the Assistant workspace.json:
+#### Import the Skill workspace.json:
 
 * Find the Assistant service in your IBM Cloud Dashboard.
 * Click on the service and then click on `Launch tool`.
@@ -67,18 +67,25 @@ In [IBM Cloud](https://cloud.ibm.com):
 * Click `Choose JSON file`, go to your cloned repo dir, and `Open` the workspace.json file in [`data/workspace.json`](data/workspace.json).
 * Select `Everything` and click `Import`.
 
-To find the `WORKSPACE_ID` for Watson Assistant:
+#### Create the Assistant and get the Assistant ID
 
-* Go back to the `Skills` tab.
-* Find the card for the workspace you would like to use. Look for `IBM Speech Sandbox Cardboard`.
-* Click on the three dots in the upper right-hand corner of the card and select `View API Details`.
-* Copy the `Workspace ID` GUID. Save it configuration later.
+* Go to the `Assistant` tab.
+* Click `Create assistant`.
+* Give it a name, i.e. `Speech Sandbox Assistant`.
+* Click on your Assistant to open it, and then click `Add dialog Skill`
 
-!["Get Workspace ID"](https://github.com/IBM/pattern-utils/blob/master/watson-assistant/assistantPostSkillGetID.gif)
+![add Skill to Assistant](doc/source/images/AddSkillToAssistant.png)
+
+* Under `Add existing skill` Choose the `IBM Speech Sandbox Cardboard` Skill.
+* Click the 3 dot menu icon and choose `Settings`.
+
+![Choose Settings](doc/source/images/AssistantsSettings.png)
+
+* Choose `API Details` and copy the `Assistant ID` for later configuration in the Unity app.
 
 ## 3. Building and Running
 
-> Note: This has been compiled and tested using Unity 2018.3.0f2 and Watson Unity SDK from the Unity asset Store as of December 19, 2018 and tested with the `develop` branch of the github unity-sdk as of `commit b626161399 Dec 19 2018`.
+> Note: This has been compiled and tested using Unity 2018.3.0f2 and Watson Unity SDK from the Unity asset Store as of December 19, 2018 and tested with the `master` branch of the github unity-sdk as of `commit 0c41751f95919e0 Apr 9 2019`.
 
 > Note: If you are in *any* IBM Cloud region other than US-South you *must* use Unity 2018.2 or higher. This is because Unity 2018.2 or higher is needed for TLS 1.2, which is the only TLS version available in all regions other than US-South.
 
@@ -94,7 +101,6 @@ cd SpeechSandbox/Assets
 git clone https://github.com/watson-developer-cloud/unity-sdk.git
 ```
 
-Make sure you are on the develop branch.
 1. Open Unity and inside the project launcher select the ![Open](doc/source/images/unity_open.png?raw=true) button.
 1. Navigate to where you cloned this repository and open the `SpeechSandbox` directory.
 1. If prompted to upgrade the project to a newer Unity version, do so.
@@ -102,10 +108,11 @@ Make sure you are on the develop branch.
 1. Follow [these instructions](https://github.com/watson-developer-cloud/unity-sdk#configuring-your-service-credentials) to create your Speech To Text and Watson Assistant services and find their credentials (using [IBM Cloud](https://cloud.ibm.com)
 1. In the Unity Hierarchy view, click on `Assets` -> `Scenes` -> `Playground` and double-click to load the scene.
 1. In the Unity Hierarchy view, click on `Player` and then the `Streaming Speech` object.
-1. In the Inspector you will see Variables for `Speech To Text` and `Watson Assistant` and either `CF Authentication` for the Cloud Foundry username and password, or the `IAM Authentication` if you have the IAM apikey. Since you only have only one version of these credentials, fill out only one of the two for each service.
-1. Fill out the `Speech To Text Service Url`, the `Assistant Service Url`, the `Assistant Workspace Id`, and the `Assistant Version Date`. There are tool tips which will show help and any defaults.
+1. In the Inspector you will see Variables for `Speech To Text` and `Watson Assistant`
+1. Add the `Speech To Text IAM APIKey` and the `Assistant IAM APIKey`
+1. Fill out the `Speech To Text Service Url` and the `Assistant Service Url`, or except the defaults. Also fill out the `Assistant Id`, and the `Assistant Version Date`. There are tool tips which will show help and any defaults.
 
-![](https://github.com/IBM/pattern-images/blob/master/Unity/UnitySpeechSandboxCreds.png)
+![Speech Sandbox Creds](doc/source/images/UnitySpeechSandboxCreds.png)
 
 1. Press Play
 1. To Build an android .apk file and deploy to your phone, you can _File_ -> _Build_ Settings (Ctrl + Shift +B) and click Build.
