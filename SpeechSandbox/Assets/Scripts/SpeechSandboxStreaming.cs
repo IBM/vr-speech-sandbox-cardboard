@@ -18,12 +18,10 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using IBM.Cloud.SDK.Connection;
 using IBM.Watson.SpeechToText.V1;
 using IBM.Cloud.SDK;
 using IBM.Cloud.SDK.Utilities;
 using IBM.Cloud.SDK.DataTypes;
-using static IBM.Cloud.SDK.Widgetss.Widget;
 using IBM.Watson.Assistant.V2.Model;
 using IBM.Watson.Assistant.V2;
 
@@ -75,13 +73,13 @@ public class SpeechSandboxStreaming : MonoBehaviour
     private int _recordingHZ = 22050;
 
     private bool createSessionTested = false;
-    private bool deleteSessionTested = false;
+    private bool deleteSessionTested;
     private string sessionId;
 
     private SpeechToTextService _speechToText;
     private AssistantService _assistant;
 
-    private bool messageTested0 = false;
+    private bool messageTested0;
 
     private IEnumerator createServices(){
 
@@ -320,12 +318,6 @@ public class SpeechSandboxStreaming : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void OnMessage0(DetailedResponse<MessageResponse> resp, IBMError error)
-    {
-        Log.Debug("SpeechSandboxStreaming.OnMessage0()", "response: {0}", resp.Result.Output.Entities[0].Entity);
-        messageTested0 = true;
     }
 
     void OnMessage(DetailedResponse<MessageResponse> resp, IBMError error)
