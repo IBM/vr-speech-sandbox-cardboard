@@ -85,7 +85,7 @@ In [IBM Cloud](https://cloud.ibm.com):
 
 ## 3. Building and Running
 
-> Note: This has been compiled and tested using Unity 2018.3.0f2 and Watson Unity SDK from the Unity asset Store as of December 19, 2018 and tested with the `master` branch of the github unity-sdk as of `commit 0c41751f95919e0 Apr 9 2019`.
+> Note: This has been compiled and tested using Unity 2018.3.0f2 and Watson Unity SDK version `v3.1.0`.
 
 > Note: If you are in *any* IBM Cloud region other than US-South you *must* use Unity 2018.2 or higher. This is because Unity 2018.2 or higher is needed for TLS 1.2, which is the only TLS version available in all regions other than US-South.
 
@@ -99,6 +99,7 @@ cd SpeechSandbox/Assets
 
 ```bash
 git clone https://github.com/watson-developer-cloud/unity-sdk.git
+git checkout v3.1.0
 ```
 
 1. Open Unity and inside the project launcher select the ![Open](doc/source/images/unity_open.png?raw=true) button.
