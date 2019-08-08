@@ -1,4 +1,5 @@
-# ARCHIVED and UNMAINTAINED!  Please note that this repository is no longer being maintained.
+# WARNING: This repository is no longer maintained :warning:
+> This repository will not be updated. The repository will be kept available in read-only mode.
 
 # Create voice commands for VR experiences with Watson services
 
